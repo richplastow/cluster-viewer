@@ -73,3 +73,5 @@ npm run test:e2e -- --debug
 ```sh
 npm run lint
 ```
+
+<!-- 188,300,987 bytes (230.6 MB on disk) for 13,822 items -->

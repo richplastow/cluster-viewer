@@ -3,5 +3,5 @@ import InfoBox from '../components/InfoBox.vue'
 </script>
 
 <template>
-  <InfoBox title="Welcome to Cluster Viewer!" />
+  <InfoBox title="Building" />
 </template>
