@@ -2,18 +2,24 @@
 :root {
   --vt-c-white: #ffffff;
   --vt-c-white-soft: #f8f8f8;
+  --vt-c-white-soft-translucent: rgba(248, 248, 248, 0.6);
   --vt-c-white-mute: #f2f2f2;
 
   --vt-c-black: #181818;
   --vt-c-black-soft: #222222;
+  --vt-c-black-soft-translucent: rgba(34, 34, 34, 0.6);
   --vt-c-black-mute: #282828;
 
   --vt-c-indigo: #2c3e50;
 
   --cv-c-neutral-1: #333;
   --cv-c-neutral-2: #808080;
-  --cv-c-blue-1: #1122cc;
-  --cv-c-blue-2: #2233ff;
+  --cv-c-neutral-3: #ccc;
+  --cv-c-beige-1: #909070;
+  --cv-c-beige-2: #606050;
+  --cv-c-brick-1: #907070;
+  --cv-c-brick-2: #605050;
+  --cv-c-brick-3: #cba6a6;
 
   --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
   --vt-c-divider-light-2: rgba(60, 60, 60, 0.12);
@@ -32,20 +38,26 @@
 :root {
   --color-background: var(--vt-c-white);
   --color-background-soft: var(--vt-c-white-soft);
+  --color-background-soft-translucent: var(--vt-c-white-soft-translucent);
   --color-background-mute: var(--vt-c-white-mute);
 
-  --color-background-button-neutral: var(--cv-c-neutral-1);
-  --color-background-button-blue: var(--cv-c-blue-1);
-  --color-background-button-blue-hover: var(--cv-c-blue-2);
+  --color-background-button-neutral: var(--vt-c-white-mute);
+  --color-background-button-beige: var(--cv-c-beige-1);
+  --color-background-button-beige-hover: var(--cv-c-beige-2);
+  --color-background-button-brick: var(--cv-c-brick-1);
+  --color-background-button-brick-hover: var(--cv-c-brick-3);
 
   --color-border: var(--vt-c-divider-light-2);
   --color-border-hover: var(--vt-c-divider-light-1);
 
   --color-heading: var(--vt-c-text-light-1);
-  --color-text: var(--vt-c-text-light-1);
-  --color-button-text: var(--vt-c-white-soft);
-  --color-button-text-neutral: var(--cv-c-neutral-2);
+  --color-text: var(--vt-c-text-light-2);
+  --color-text-hover: var(--vt-c-text-light-1);
+  --color-button-text: var(--vt-c-white-mute);
+  --color-button-text-neutral: var(--cv-c-neutral-3);
+  --color-button-text-header: var(--vt-c-black-mute);
   --color-button-text-hover: var(--vt-c-white);
+  --color-button-text-header-hover: var(--vt-c-black);
 
   --section-gap: 160px;
 }
@@ -54,13 +66,26 @@
   :root {
     --color-background: var(--vt-c-black);
     --color-background-soft: var(--vt-c-black-soft);
+    --color-background-soft-translucent: var(--vt-c-black-soft-translucent);
     --color-background-mute: var(--vt-c-black-mute);
+
+    --color-background-button-neutral: var(--cv-c-neutral-1);
+    --color-background-button-beige: var(--cv-c-beige-2);
+    --color-background-button-beige-hover: var(--cv-c-beige-1);
+    --color-background-button-brick: var(--cv-c-brick-2);
+    --color-background-button-brick-hover: var(--cv-c-brick-1);
 
     --color-border: var(--vt-c-divider-dark-2);
     --color-border-hover: var(--vt-c-divider-dark-1);
 
     --color-heading: var(--vt-c-text-dark-1);
     --color-text: var(--vt-c-text-dark-2);
+    --color-text-hover: var(--vt-c-text-dark-1);
+    --color-button-text: var(--cv-c-neutral-3);
+    --color-button-text-neutral: var(--cv-c-neutral-2);
+    --color-button-text-header: var(--vt-c-white-mute);
+    --color-button-text-hover: var(--vt-c-white-mute);
+    --color-button-text-header-hover: var(--vt-c-white);
   }
 }
 

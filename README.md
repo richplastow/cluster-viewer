@@ -75,3 +75,4 @@ npm run lint
 ```
 
 <!-- 188,300,987 bytes (230.6 MB on disk) for 13,822 items -->
+<!-- 193,381,429 bytes (231.2 MB on disk) for 13,904 items after `npm i @vueuse/core` -->

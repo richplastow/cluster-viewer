@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import ClusterMode from '../type/ClusterMode.ts'
+import ClusterMode from '../types/ClusterMode.ts'
 defineProps<{
   isEnabled?: boolean,
   mode: ClusterMode,
   switchMode: (mode: ClusterMode) => void,
+  text: string,
   title: string,
 }>()
 </script>
@@ -13,7 +14,8 @@ defineProps<{
     @click="() => switchMode(mode)"
     :className="isEnabled ? 'enabled' : ''"
     :tabindex="isEnabled ? 1 : -1"
-  >{{ title }}</button>
+    :title="title"
+  >{{ text }}</button>
 </template>
 
 <style scoped>
@@ -26,17 +28,19 @@ button {
   color: var(--color-button-text-neutral);
   border: none;
   border-radius: 2px;
+  font-size: 1.3rem;
+  font-weight: bold;
   transition: background-color var(--fast);
   cursor: pointer;
   pointer-events: none;
 }
 button.enabled {
-  background-color: var(--color-background-button-blue);
+  background-color: var(--color-background-button-beige);
   color: var(--color-button-text);
   pointer-events: auto;
 }
 button:hover {
-  background-color: var(--color-background-button-blue-hover);
+  background-color: var(--color-background-button-beige-hover);
   color: var(--color-button-text-hover);
 }
 </style>
