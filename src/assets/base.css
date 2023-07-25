@@ -1,4 +1,4 @@
-/* color palette from <https://github.com/vuejs/theme> */
+/* color palette based on <https://github.com/vuejs/theme> */
 :root {
   --vt-c-white: #ffffff;
   --vt-c-white-soft: #f8f8f8;
@@ -10,6 +10,11 @@
 
   --vt-c-indigo: #2c3e50;
 
+  --cv-c-neutral-1: #333;
+  --cv-c-neutral-2: #808080;
+  --cv-c-blue-1: #1122cc;
+  --cv-c-blue-2: #2233ff;
+
   --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
   --vt-c-divider-light-2: rgba(60, 60, 60, 0.12);
   --vt-c-divider-dark-1: rgba(84, 84, 84, 0.65);
@@ -19,6 +24,8 @@
   --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
   --vt-c-text-dark-1: var(--vt-c-white);
   --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
+
+  --fast: 200ms;
 }
 
 /* semantic color variables for this project */
@@ -27,11 +34,18 @@
   --color-background-soft: var(--vt-c-white-soft);
   --color-background-mute: var(--vt-c-white-mute);
 
+  --color-background-button-neutral: var(--cv-c-neutral-1);
+  --color-background-button-blue: var(--cv-c-blue-1);
+  --color-background-button-blue-hover: var(--cv-c-blue-2);
+
   --color-border: var(--vt-c-divider-light-2);
   --color-border-hover: var(--vt-c-divider-light-1);
 
   --color-heading: var(--vt-c-text-light-1);
   --color-text: var(--vt-c-text-light-1);
+  --color-button-text: var(--vt-c-white-soft);
+  --color-button-text-neutral: var(--cv-c-neutral-2);
+  --color-button-text-hover: var(--vt-c-white);
 
   --section-gap: 160px;
 }
