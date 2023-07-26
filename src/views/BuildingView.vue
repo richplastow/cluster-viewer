@@ -17,8 +17,8 @@ const switchMode = (mode: ClusterMode) => selectedMode.value = mode
   <InfoBox :modelInfo="modelInfo" heading="Building" />
   <ClusterModeBox :selectedMode="selectedMode" :switchMode="switchMode" />
   <ThreeScene
-    :cameraDistance="95"
-    :modelPosition="[ 0, -30, 0 ]"
+    :cameraPosition="[0, 50, 300]"
+    :modelPosition="[0, -30, 0]"
     :reportModelInfo="reportModelInfo"
     :selectedMode="selectedMode"
     modelUrl="/models/building.glb"

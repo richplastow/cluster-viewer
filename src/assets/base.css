@@ -58,6 +58,8 @@
   --color-button-text-header: var(--vt-c-black-mute);
   --color-button-text-hover: var(--vt-c-white);
   --color-button-text-header-hover: var(--vt-c-black);
+  --color-big-link-text: var(--cv-c-beige-1);
+  --color-big-link-text-hover: var(--vt-c-white-mute);
 
   --section-gap: 160px;
 }
@@ -86,6 +88,8 @@
     --color-button-text-header: var(--vt-c-white-mute);
     --color-button-text-hover: var(--vt-c-white-mute);
     --color-button-text-header-hover: var(--vt-c-white);
+    --color-big-link-text: var(--cv-c-beige-1); /* same as light */
+    --color-big-link-text-hover: var(--vt-c-white-mute); /* same as light */
   }
 }
 

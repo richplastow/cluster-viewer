@@ -27,14 +27,14 @@ a {
   display: inline-block;
   margin: 0 0.2rem 0.5rem 0;
   padding: 0.5rem;
-  line-height: 1.1rem;
+  line-height: 1.2rem;
   background-color: transparent;
   color: var(--color-button-text-neutral);
-  border: none;
+  border: 1px solid transparent;
   border-radius: 2px;
   font-size: 1rem;
   text-decoration: none;
-  transition: background-color var(--fast);
+  transition: background-color var(--fast); /* but not border-color or color */
   cursor: pointer;
   pointer-events: none;
 }
@@ -45,10 +45,12 @@ a.text {
   transform: translateY(-0.2rem);
 }
 a.enabled {
+  border-color: var(--color-border);
   color: var(--color-button-text-header);
   pointer-events: auto;
 }
 a:hover {
+  border-color: var(--color-border-hover);
   background-color: var(--color-background-button-brick-hover);
   color: var(--color-button-text-header-hover);
 }

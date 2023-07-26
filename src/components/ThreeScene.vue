@@ -8,7 +8,7 @@ import type { GLTFLoader, Matrix3, Mesh } from '@/types/ThreeTypes'
 import { Box3, Vector3 } from 'three'
 
 const props = defineProps<{
-  cameraDistance: number,
+  cameraPosition: Matrix3,
   modelPosition: Matrix3,
   modelUrl: string,
   reportModelInfo: (info: ModelInfo) => void,
@@ -107,7 +107,6 @@ const onModelLoaded = () => {
   // treated as an individually-positionable 3D object.
   // `children[0].children[0].children` depends on the structure of the models.
   meshes.value = model.value.three.children[0].children[0].children
-  console.log(meshes.value)
 
   // Tell each Mesh which material cluster its in, and group Meshes by material name.
   const meshesByMaterialName = meshes.value.reduce(
@@ -147,8 +146,8 @@ const onModelLoaded = () => {
   }
   props.reportModelInfo(modelInfo)
 
-  // Use `props.cameraDistance` as a proxy for model size.
-  const spacing = props.cameraDistance * 0.7
+  // Use `props.cameraPosition[2]` as a proxy for model size.
+  const spacing = props.cameraPosition[2] * 0.7
 
   // Calculate the central position of each cluster.
   const materialClusterCenters = Object.keys(meshesByMaterialName).reduce(
@@ -202,7 +201,7 @@ const onModelLoaded = () => {
       :on-before-render="onAnimationFrame"
     >
       <PerspectiveCamera
-        :position="[cameraDistance, cameraDistance, cameraDistance]"
+        :position="cameraPosition"
         :up="[0, 1, 0]"
       >
         <OrbitControls />

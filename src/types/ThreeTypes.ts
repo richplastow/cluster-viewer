@@ -1,10 +1,4 @@
-import { GLTFLoader, Mesh } from '@janvorisek/drie'
-
-// /** A 3D vector, often a coordinate, with `x`, `y`, and `z` properties. */
-// export type Coordinate = { x:number, y:number, z:number }
-
-// /** An axis-aligned bounding box in 3D space, with `min` and `max` Vector3s. */
-// export type BoundingBox = { min:Coordinate, max:Coordinate }
+import { GLTFLoader, PerspectiveCamera, Mesh } from '@janvorisek/drie'
 
 /** The Drie `GLTFLoader` type. */
 export type GLTFLoader = typeof GLTFLoader
@@ -15,3 +9,5 @@ export type Matrix3 = [ number, number, number ]
 /** The Drie Object3D `Mesh` type. */
 export type Mesh = typeof Mesh
 
+/** The Drie Object3D `PerspectiveCamera` type. */
+export type PerspectiveCamera = typeof PerspectiveCamera
