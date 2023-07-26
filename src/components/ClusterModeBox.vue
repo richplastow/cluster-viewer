@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ClusterMode from '../types/ClusterMode.ts'
+import ClusterMode from '@/types/ClusterMode'
 import ClusterModeButton from './ClusterModeButton.vue';
 
 defineProps<{
