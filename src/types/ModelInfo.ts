@@ -1,4 +1,4 @@
-/** Metadata gathered from a GLTF model, displayed by an InfoBox. */
+/** Metadata gathered from a glTF model, displayed by an InfoBox. */
 export default interface ModelInfo {
   /** The number of distinct materials in the model. */
   materialTally: number
