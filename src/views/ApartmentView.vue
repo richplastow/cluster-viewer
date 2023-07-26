@@ -1,20 +1,26 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import ClusterMode from '@/types/ClusterMode'
 import ClusterModeBox from '@/components/ClusterModeBox.vue'
-import InfoBox from '../components/InfoBox.vue'
-import ThreeScene from '../components/ThreeScene.vue'
+import InfoBox from '@/components/InfoBox.vue'
+import ThreeScene from '@/components/ThreeScene.vue'
+import ClusterMode from '@/types/ClusterMode'
+import type ModelInfo from '@/types/ModelInfo'
+
+const modelInfo = ref<null | ModelInfo>(null)
+const reportModelInfo = (info: ModelInfo) => modelInfo.value = info
 
 const selectedMode = ref(ClusterMode.None)
 const switchMode = (mode: ClusterMode) => selectedMode.value = mode
 </script>
 
 <template>
-  <InfoBox title="Apartment" />
+  <InfoBox :modelInfo="modelInfo" heading="Apartment" />
   <ClusterModeBox :selectedMode="selectedMode" :switchMode="switchMode" />
   <ThreeScene
-    :cameraDistance="7"
-    modelUrl="/models/apartment.glb"
+    :cameraDistance="6.5"
+    :modelPosition="[ -1, 0, 3 ]"
+    :reportModelInfo="reportModelInfo"
     :selectedMode="selectedMode"
+    modelUrl="/models/apartment.glb"
   />
 </template>

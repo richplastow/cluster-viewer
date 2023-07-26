@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ClusterMode from '../types/ClusterMode.ts'
+import ClusterMode from '@/types/ClusterMode'
 defineProps<{
   isEnabled?: boolean,
   mode: ClusterMode,
