@@ -8,30 +8,37 @@ const props = defineProps<{
 }>()
 
 // Generates a readable summary of the `modelInfo` object.
-const infoText = (
-  info: ModelInfo | null,
+const formatInfo = (
+  info: null | ModelInfo,
   key:'materialTally' | 'shapeTally',
   plural: string,
   singular: string,
 ) => {
-  if (info === null) return '' // loading
+  if (info === null) return null // loading
   const tally = info[key] // eg props.modelInfo.materialTally
   if (tally === 0) return `No ${plural}` // @TODO disable the button
   if (tally === 1) return `1 ${singular}` // @TODO does the button make sense?
   return `${tally} ${plural}`
 }
 
-const materialText = computed(
-  () => infoText(props.modelInfo, 'materialTally', 'Materials', 'Material'))
+const materialText = (info: null | ModelInfo) =>
+  formatInfo(info, 'materialTally', 'Materials', 'Material')
 
-const shapeText = computed(
-  () => infoText(props.modelInfo, 'shapeTally', 'Shapes', 'Shape'))
+const shapeText = (info: null | ModelInfo) =>
+  formatInfo(info, 'shapeTally', 'Shapes', 'Shape')
+
+const infoText = computed(() => {
+  const material = materialText(props.modelInfo)
+  const shape = shapeText(props.modelInfo)
+  if (material === null && shape === null) return null
+  return `${material} · ${shape}`
+})
 </script>
 
 <template>
   <aside>
     <h1>{{ heading }}</h1>
-    <p>{{ materialText }} · {{ shapeText }}</p>
+    <p :class="infoText && 'loaded'">{{ infoText }}</p>
   </aside>
 </template>
 
@@ -56,5 +63,10 @@ p {
   color: var(--color-text);
   font-size: 1rem;
   font-weight: bold;
+  opacity: 0;
+  transition: opacity var(--fast);
+}
+p.loaded {
+  opacity: 1;
 }
 </style>

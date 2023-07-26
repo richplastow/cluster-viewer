@@ -13,7 +13,7 @@ defineProps<{
 <template>
   <RouterLink
     :to="to"
-    :className="`${isEnabled ? 'enabled' : ''} ${icon ? 'icon' : 'text'}`"
+    :class="`${isEnabled ? 'enabled' : ''} ${icon ? 'icon' : 'text'}`"
     :tabindex="isEnabled ? 1 : -1"
     :title="title"
   >

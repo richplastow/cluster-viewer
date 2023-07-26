@@ -12,7 +12,7 @@ defineProps<{
 <template>
   <button
     @click="() => switchMode(mode)"
-    :className="isEnabled ? 'enabled' : ''"
+    :class="isEnabled ? 'enabled' : ''"
     :tabindex="isEnabled ? 1 : -1"
     :title="title"
   >{{ text }}</button>
