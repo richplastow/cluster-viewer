@@ -9,7 +9,7 @@ defineProps<{
 
 const buttons = [
   { mode:ClusterMode.Shape, text:'Cluster by Shape', title:'Click to arrange into clusters of similar shape' },
-  { mode:ClusterMode.Colour, text:'Cluster by Colour', title:'Click to arrange into clusters of the same colour' },
+  { mode:ClusterMode.Color, text:'Cluster by Colour', title:'Click to arrange into clusters of the same colour' },
   { mode:ClusterMode.Original, text:'Original', title:'Click to show the original model' },
 ]
 </script>

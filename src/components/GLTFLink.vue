@@ -16,7 +16,7 @@ const props = defineProps<{
 const didSetup = ref(false)
 const camera = ref<null | PerspectiveCamera>(null)
 const model = ref<null | GLTFLoader>(null) // null before the model loads
-const colorScheme = usePreferredColorScheme() // tracks CSS prefers-color-scheme
+const theme = usePreferredColorScheme() // tracks CSS prefers-color-scheme
 
 // Slowly rotate the model, one radian per 10 seconds about the y-axis.
 const yAxis = new Vector3(0, 1, 0)
@@ -63,9 +63,15 @@ watch(camera, async () => {
         ref="camera"
       />
 
-      <Scene :background="colorScheme === 'dark' ? '#333' : '#ccc'">
-        <DirectionalLight :position="[30, 100, 100]" />
-        <DirectionalLight :position="[-30, 100, -100]" />
+      <Scene :background="theme === 'dark' ? '#333' : '#ccc'">
+        <DirectionalLight
+          :position="[30, 100, 100]"
+          :intensity="theme === 'dark' ? 0.7 : 2"
+        />
+        <DirectionalLight
+          :position="[-30, 100, -100]"
+          :intensity="theme === 'dark' ? 0.2 : 1.5"
+        />
         <GLTFLoader
         :url="fixUrlForProd(modelUrl)"
           ref="model"

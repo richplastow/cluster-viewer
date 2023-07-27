@@ -4,6 +4,7 @@ import ClusterModeBox from '@/components/ClusterModeBox.vue'
 import InfoBox from '@/components/InfoBox.vue'
 import GLTFViewer from '@/components/GLTFViewer.vue'
 import ClusterMode from '@/types/ClusterMode'
+import ColorName from '@/types/ColorName'
 import type ModelInfo from '@/types/ModelInfo'
 
 const modelInfo = ref<null | ModelInfo>(null)
@@ -21,7 +22,7 @@ const switchMode = (mode: ClusterMode) => selectedMode.value = mode
     :modelPosition="[-1, 0, 3]"
     :reportModelInfo="reportModelInfo"
     :selectedMode="selectedMode"
-    invisibleColourName="black"
+    :invisibleColorName="ColorName.Black"
     modelUrl="/models/apartment.glb"
   />
 </template>

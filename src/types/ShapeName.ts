@@ -1,4 +1,4 @@
-/** Defines how the model should currently be clustered. */
+/** The categories of Mesh shapes. */
 enum ShapeName {
   /** A shape whose width is much greater than its height or depth. */
   BeamFacing,

@@ -1,6 +1,6 @@
 /** Defines how the model should currently be clustered. */
 enum ClusterMode {
-  Colour,
+  Color,
   Original,
   Shape,
 }
