@@ -4,8 +4,9 @@ import { Box3, Vector3 } from 'three'
 import { ref, watch } from 'vue'
 import { fixUrlForProd } from '@/env'
 import ClusterMode from '@/types/ClusterMode'
+import ShapeName from '@/types/ShapeName'
 import type ModelInfo from '@/types/ModelInfo'
-import type { GLTFLoader, Matrix3, Mesh } from '@/types/ThreeTypes'
+import type { GLTFLoader, Matrix3, Mesh, MeshArrayDict } from '@/types/ThreeTypes'
 
 const props = defineProps<{
   cameraPosition: Matrix3,
@@ -56,19 +57,34 @@ const onAnimationFrame = () => {
   )
 }
 
-// Generates a name like '15x400x985' from a Mesh's geometry. 'Cluster by Shape'
-// will group together meshes whose geometries are:
-// - Less than a millimeter different
-// - The same when rotated 90 degrees about the y axis
+// Identifies a Mesh's geometry as a 'Pillar', or 'VerticalPlaneSideways', etc.
+// This function relies on a model where all geometries are aligned to the x, y
+// and z axis.
 const boundingBoxToShapeName = (mesh?: Mesh) => {
-  if (! mesh?.geometry) return '(invalid)' // probably never encountered
+  if (! mesh?.geometry) return ShapeName.Unknown // probably never encountered
   const boundingBox: Box3 = mesh.geometry.boundingBox
-  const size = new Vector3()
-  boundingBox.getSize(size)
-  const x = Math.round(size.x * 1000) // round to the nearest mm
-  const y = Math.round(size.y * 1000)
-  const z = Math.round(size.z * 1000)
-  return `${Math.min(x, z)}x${Math.max(x, z)}x${y}` // short x long x height
+  const dimensions = new Vector3()
+  boundingBox.getSize(dimensions) // note that y is depth, not height
+  const { x: width, y: depth, z: height } = dimensions
+  const w5 = width * 5
+  const d5 = depth * 5
+  const h5 = height * 5
+  switch (true) {
+    // A shape whose width is much greater than its height or depth.
+    case width > h5 && width > d5: return ShapeName.BeamFacing
+    // A shape whose depth is much greater than its width or height.
+    case depth > w5 && depth > h5: return ShapeName.BeamSideways
+    // A shape whose height is much greater than its width or depth.
+    case height > w5 && height > d5: return ShapeName.Pillar
+    // A horizontal plane, like a floor or ceiling.
+    case h5 < width && h5 < depth: return ShapeName.HorizontalPlane
+    // A vertical plane, like a wall, which extends in the x direction.
+    case d5 < width && d5 < height: return ShapeName.VerticalPlaneFacing
+    // A vertical plane, like a wall, which extends in the z direction.
+    case w5 < height && w5 < depth: return ShapeName.VerticalPlaneSideways
+    // Doesn't conform to any of the other shapes, so must be somewhat boxy.
+    default: return ShapeName.Block
+  }
 }
 
 const getBoundingBoxOffset = (origin: Vector3, mesh?: Mesh): Vector3 => {
@@ -77,15 +93,26 @@ const getBoundingBoxOffset = (origin: Vector3, mesh?: Mesh): Vector3 => {
   const center = new Vector3()
   boundingBox.getCenter(center)
   return center.sub(origin).negate() // negate() sets x = -x, y = -y and z = -z
-  // return origin.sub(center)
 }
 
 // Returns the coordinates of a cluster's center, based on a rectangular grid.
+//
+// Note that the choice of coordinates has been tailored to the peculiarities
+// of apartment.glb and building.glb - a more complex system would be needed
+// to deal with a wider range of glTF models.
 const getClusterCenter = (
   itemIndex: number,
   spacing: number,
   totalItems: number,
 ) => {
+  if (totalItems === 4) { // Building has 4 shapes
+    switch (itemIndex) {
+      case 0: return new Vector3(0, 0, 0) // BeamSideways 19
+      case 1: return new Vector3(spacing * -2, spacing, 0) // Block 380
+      case 2: return new Vector3(spacing * -0.3, 0, 47) // Pillar 3
+      case 3: return new Vector3(-spacing, 0, 0) // HorizontalPlane 29
+    }
+  }
   if (totalItems === 6) {
     const x = itemIndex % 2
     const y = (itemIndex - x) / 2
@@ -109,8 +136,8 @@ const onModelLoaded = () => {
   meshes.value = model.value.three.children[0].children[0].children
 
   // Tell each Mesh which material cluster its in, and group Meshes by material name.
-  const meshesByMaterialName = meshes.value.reduce(
-    (accumulator: { [key: string]: Mesh[] }, mesh) => {
+  const meshesByMaterialName: MeshArrayDict = meshes.value.reduce(
+    (accumulator: MeshArrayDict, mesh) => {
       const key: string = mesh.children[0]?.material?.name
       mesh.userData.materialName = key
       const array = accumulator[key]
@@ -125,8 +152,8 @@ const onModelLoaded = () => {
 
   // Tell each Mesh which shape cluster its in, and group Meshes by shape name.
   // A shape is determined by the geometry's bounding box.
-  const meshesByShapeName = meshes.value.reduce(
-    (accumulator: { [key: string]: Mesh[] }, mesh) => {
+  const meshesByShapeName: MeshArrayDict = meshes.value.reduce(
+    (accumulator: MeshArrayDict, mesh) => {
       const key = boundingBoxToShapeName(mesh.children[0])
       mesh.userData.shapeName = key
       const array = accumulator[key]
@@ -147,14 +174,16 @@ const onModelLoaded = () => {
   props.reportModelInfo(modelInfo)
 
   // Use `props.cameraPosition[2]` as a proxy for model size.
-  const spacing = props.cameraPosition[2] * 0.7
+  const clusterSpacing = props.cameraPosition[2] * 0.7 // gap between clusters
+  const modelSpacing = props.cameraPosition[2] * 0.03 // gap within a cluster
+  
 
   // Calculate the central position of each cluster.
   const materialClusterCenters = Object.keys(meshesByMaterialName).reduce(
     (accumulator: { [key: string]: Vector3 }, key, i) => (
       {
         ...accumulator,
-        [key]: getClusterCenter(i, spacing, modelInfo.materialTally)
+        [key]: getClusterCenter(i, clusterSpacing, modelInfo.materialTally)
       }
     ), {}
   )
@@ -162,12 +191,13 @@ const onModelLoaded = () => {
     (accumulator: { [key: string]: Vector3 }, key, i) => (
       {
         ...accumulator,
-        [key]: getClusterCenter(i, spacing, modelInfo.shapeTally)
+        [key]: getClusterCenter(i, clusterSpacing, modelInfo.shapeTally)
       }
     ), {}
   )
 
-  // Tell each Mesh its geometry's offset from the original starting position.
+  // Tell each Mesh its geometry's offsets from the original starting position.
+  // First, overlapping at the exact center of the three cluster modes.
   interface UserData {
     materialName: string
     shapeName: string
@@ -186,9 +216,47 @@ const onModelLoaded = () => {
       material: getBoundingBoxOffset(materialClusterCenter, child),
       shape: getBoundingBoxOffset(shapeClusterCenter, child),
       original: mesh.position.clone(), // always (0,0,0) in Apartment, but not Building
-       //getBoundingBoxOffset(origin, child),
     }
   })
+
+  // Second, stop the Material cluster Meshes from overlapping.
+  //
+  // Note that the fanning-out here is carefully tailored to the peculiarities
+  // of apartment.glb and building.glb - a more complex system would be needed
+  // to deal with a wider range of glTF models.
+  Object.entries(meshesByShapeName).forEach(([ shapeName, meshes ]) => {
+    const tally = meshes.length
+    const rankCount = Math.floor(Math.sqrt(tally))
+    const fileCount = Math.floor(tally / rankCount)
+    meshes.forEach((mesh, i) => {
+      const data: UserData = mesh.userData
+      switch (Number(shapeName)) {
+        case ShapeName.Block:
+          const rank = i % rankCount
+          const file = (i - rank) / fileCount
+          data.offset.shape.x += rank * modelSpacing * 4
+          data.offset.shape.y += file * modelSpacing * 4
+          break
+        case ShapeName.HorizontalPlane:
+          data.offset.shape.z += i * modelSpacing
+          break
+        case ShapeName.Pillar:
+          data.offset.shape.y += i * modelSpacing * 4
+          break
+        case ShapeName.BeamFacing:
+        case ShapeName.VerticalPlaneFacing:
+          data.offset.shape.y += i * modelSpacing
+          break
+        case ShapeName.BeamSideways:
+        case ShapeName.VerticalPlaneSideways:
+          data.offset.shape.x += i * modelSpacing
+          break
+      }
+    })
+    console.log(ShapeName[shapeName], meshes.length);    
+  })
+
+
 }
 
 </script>

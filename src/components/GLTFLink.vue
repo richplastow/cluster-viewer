@@ -67,7 +67,7 @@ watch(camera, async () => {
         <DirectionalLight :position="[30, 100, 100]" />
         <DirectionalLight :position="[-30, 100, -100]" />
         <GLTFLoader
-          :url="fixUrlForProd(modelUrl)"
+        :url="fixUrlForProd(modelUrl)"
           ref="model"
         />
       </Scene>
