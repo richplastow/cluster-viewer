@@ -12,7 +12,7 @@ const { lerp } = MathUtils
 
 const props = defineProps<{
   cameraPosition: Matrix3,
-  invisibleMaterialName?: string,
+  invisibleColourName?: string,
   modelPosition: Matrix3,
   modelUrl: string,
   reportModelInfo: (info: ModelInfo) => void,
@@ -169,7 +169,7 @@ const getClusterCenter = (
   spacing: number,
   totalItems: number,
 ) => {
-  // Return a bespoke arrangement for the building.glb's materials.
+  // Return a bespoke arrangement for the building.glb's shape cluster.
   if (totalItems === 4) {
     switch (Number(key)) {
       case ShapeName.BeamSideways: return new Vector3(0, 0, 0)
@@ -179,7 +179,7 @@ const getClusterCenter = (
     }
   }
   if (totalItems === 6) {
-    // Return a bespoke arrangement for the apartment.glb's materials.
+    // Return a bespoke arrangement for the apartment.glb's shape cluster.
     switch (Number(key)) {
       case ShapeName.PlaneLandscapeFacing: return new Vector3(-6, 0, 0)
       case ShapeName.PlaneLandscapeSideways: return new Vector3(-6, 4.5, 0)
@@ -210,11 +210,11 @@ const onModelLoaded = () => {
   // `children[0].children[0].children` depends on the structure of the models.
   meshes.value = model.value.three.children[0].children[0].children  
 
-  // Tell each Mesh which material cluster its in, and group Meshes by material name.
-  const meshesByMaterialName: MeshArrayDict = meshes.value.reduce(
+  // Tell each Mesh which colour cluster its in, and group Meshes by colour name.
+  const meshesByColorName: MeshArrayDict = meshes.value.reduce(
     (accumulator: MeshArrayDict, mesh) => {
       const key: string = mesh.children[0]?.material?.name
-      mesh.userData.materialName = key
+      mesh.userData.colourName = key
       const array = accumulator[key]
       if (array) {
         array.push(mesh)
@@ -242,10 +242,10 @@ const onModelLoaded = () => {
     }, {}
   )
 
-  // Send the tally of materials and shapes to the InfoBox.
-  // The `invisibleMaterialName` prop isn't counted, eg apartment.glb's black lines.
-  const materialTally = Object.keys(meshesByMaterialName)
-    .filter(k => k !== props.invisibleMaterialName).length
+  // Send the tally of colours and shapes to the InfoBox.
+  // The `invisibleColourName` prop isn't counted, eg apartment.glb's black lines.
+  const colourTally = Object.keys(meshesByColorName)
+    .filter(k => k !== props.invisibleColourName).length
   const shapeTally = Object.keys(meshesByShapeName).length
   let displayedShapeTally = shapeTally
   if (
@@ -260,17 +260,17 @@ const onModelLoaded = () => {
     meshesByShapeName[ShapeName.PlaneSquareFacing] &&
     meshesByShapeName[ShapeName.PlaneSquareSideways]
   ) displayedShapeTally -= 1
-  props.reportModelInfo({ materialTally, shapeTally: displayedShapeTally })
+  props.reportModelInfo({ colourTally, shapeTally: displayedShapeTally })
 
   // Use `props.cameraPosition[2]` as a proxy for model size.
   const clusterSpacing = props.cameraPosition[2] * 0.7 // gap between clusters
   const modelSpacing = props.cameraPosition[2] * 0.03 // gap within a cluster
   
   // Calculate the central position of each cluster.
-  const materialClusterCenters = Object.keys(meshesByMaterialName).reduce(
+  const colourClusterCenters = Object.keys(meshesByColorName).reduce(
     (accumulator: { [key: string]: Vector3 }, key, i) => (
       {  ...accumulator,
-        [key]: getClusterCenter(i, key, clusterSpacing, materialTally),
+        [key]: getClusterCenter(i, key, clusterSpacing, colourTally),
       }
     ), {}
   )
@@ -284,35 +284,35 @@ const onModelLoaded = () => {
   // Tell each Mesh its geometry's offsets from the original starting position.
   // First, overlapping at the exact center of the three cluster modes.
   interface UserDataGroup<T> {
-    [ClusterMode.Material]: T,
+    [ClusterMode.Colour]: T,
     [ClusterMode.Original]: T,
     [ClusterMode.Shape]: T,
   }
   interface UserData {
     visible: UserDataGroup<boolean>
-    materialName: string
+    colourName: string
     shapeName: ShapeName
     offset: UserDataGroup<Vector3>
   }
   meshes.value.forEach(mesh => {
     const child = mesh.children[0] // contains the geometry
     const data: UserData = mesh.userData
-    const materialClusterCenter = materialClusterCenters[data.materialName]
+    const colourClusterCenter = colourClusterCenters[data.colourName]
     const shapeClusterCenter = shapeClusterCenters[Number(data.shapeName)]
     data.visible = { // eg hide apartment.glb's black lines
-      [ClusterMode.Material]: data.materialName !== props.invisibleMaterialName,
+      [ClusterMode.Colour]: data.colourName !== props.invisibleColourName,
       [ClusterMode.Original]: true,
-      [ClusterMode.Shape]: data.materialName !== props.invisibleMaterialName,
+      [ClusterMode.Shape]: data.colourName !== props.invisibleColourName,
     }
     data.offset = {
-      [ClusterMode.Material]: getBoundingBoxOffset(materialClusterCenter, child),
+      [ClusterMode.Colour]: getBoundingBoxOffset(colourClusterCenter, child),
       [ClusterMode.Original]: mesh.position.clone(), // always (0,0,0) in Apartment, but not Building
       [ClusterMode.Shape]: getBoundingBoxOffset(shapeClusterCenter, child),
     }
   })
 
-  // Second, stop the Material cluster Meshes from overlapping.
-  // The `invisibleMaterialName` prop is skipped, eg apartment.glb's black lines.
+  // Second, stop the Colour cluster Meshes from overlapping.
+  // The `invisibleColourName` prop is skipped, eg apartment.glb's black lines.
   //
   // Note that the fanning-out here is carefully tailored to the peculiarities
   // of apartment.glb and building.glb - a more complex system would be needed
@@ -322,7 +322,7 @@ const onModelLoaded = () => {
     const rankCount = Math.floor(Math.sqrt(tally))
     const fileCount = Math.floor(tally / rankCount)
     meshes
-      .filter(mesh => mesh.userData.materialName !== props.invisibleMaterialName)
+      .filter(mesh => mesh.userData.colourName !== props.invisibleColourName)
       .forEach((mesh, i) => {
         const shape: Vector3 = mesh.userData.offset[ClusterMode.Shape]
         switch (Number(shapeName)) {

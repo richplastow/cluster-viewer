@@ -21,7 +21,7 @@ const switchMode = (mode: ClusterMode) => selectedMode.value = mode
     :modelPosition="[-1, 0, 3]"
     :reportModelInfo="reportModelInfo"
     :selectedMode="selectedMode"
-    invisibleMaterialName="black"
+    invisibleColourName="black"
     modelUrl="/models/apartment.glb"
   />
 </template>

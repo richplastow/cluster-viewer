@@ -10,28 +10,28 @@ const props = defineProps<{
 // Generates a readable summary of the `modelInfo` object.
 const formatInfo = (
   info: null | ModelInfo,
-  key:'materialTally' | 'shapeTally',
+  key:'colourTally' | 'shapeTally',
   plural: string,
   singular: string,
 ) => {
   if (info === null) return null // loading
-  const tally = info[key] // eg props.modelInfo.materialTally
+  const tally = info[key] // eg props.modelInfo.colourTally
   if (tally === 0) return `No ${plural}` // @TODO disable the button
   if (tally === 1) return `1 ${singular}` // @TODO does the button make sense?
   return `${tally} ${plural}`
 }
 
-const materialText = (info: null | ModelInfo) =>
-  formatInfo(info, 'materialTally', 'Materials', 'Material')
+const colourText = (info: null | ModelInfo) =>
+  formatInfo(info, 'colourTally', 'Colours', 'Colour')
 
 const shapeText = (info: null | ModelInfo) =>
   formatInfo(info, 'shapeTally', 'Shapes', 'Shape')
 
 const infoText = computed(() => {
-  const material = materialText(props.modelInfo)
+  const colour = colourText(props.modelInfo)
   const shape = shapeText(props.modelInfo)
-  if (material === null && shape === null) return null
-  return `${material} · ${shape}`
+  if (colour === null && shape === null) return null
+  return `${colour} · ${shape}`
 })
 </script>
 
