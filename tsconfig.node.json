@@ -1,6 +1,7 @@
 {
   "extends": "@tsconfig/node18/tsconfig.json",
   "include": [
+    "src/env.ts",
     "vite.config.*",
     "vitest.config.*",
     "playwright.config.*"

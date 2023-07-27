@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import ClusterModeBox from '@/components/ClusterModeBox.vue'
 import InfoBox from '@/components/InfoBox.vue'
-import ThreeScene from '@/components/ThreeScene.vue'
+import GLTFViewer from '@/components/GLTFViewer.vue'
 import ClusterMode from '@/types/ClusterMode'
 import type ModelInfo from '@/types/ModelInfo'
 
@@ -16,8 +16,8 @@ const switchMode = (mode: ClusterMode) => selectedMode.value = mode
 <template>
   <InfoBox :modelInfo="modelInfo" heading="Building" />
   <ClusterModeBox :selectedMode="selectedMode" :switchMode="switchMode" />
-  <ThreeScene
-    :cameraPosition="[0, 50, 300]"
+  <GLTFViewer
+    :cameraPosition="[95, 50, 95]"
     :modelPosition="[0, -30, 0]"
     :reportModelInfo="reportModelInfo"
     :selectedMode="selectedMode"

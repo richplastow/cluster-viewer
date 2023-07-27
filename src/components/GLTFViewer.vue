@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { usePreferredColorScheme } from '@vueuse/core'
+import { Box3, Vector3 } from 'three'
 import { ref, watch } from 'vue'
+import { fixUrlForProd } from '@/env'
 import ClusterMode from '@/types/ClusterMode'
 import type ModelInfo from '@/types/ModelInfo'
 import type { GLTFLoader, Matrix3, Mesh } from '@/types/ThreeTypes'
-
-import { Box3, Vector3 } from 'three'
 
 const props = defineProps<{
   cameraPosition: Matrix3,
@@ -212,7 +212,7 @@ const onModelLoaded = () => {
         <DirectionalLight :position="[-30, 100, -100]" />
         <GLTFLoader
           :position="modelPosition"
-          :url="modelUrl"
+          :url="fixUrlForProd(modelUrl)"
           @load="onModelLoaded"
           ref="model"
         />

@@ -11,7 +11,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore --ignore-pattern /docs/",
     "poststart": "mv cluster-viewer docs",
     "preview": "vite preview",
-    "start": "npm run build && mv dist cluster-viewer && static-server",
+    "start": "rm -rf cluster-viewer && npm run build && mv dist cluster-viewer && static-server",
     "test:e2e": "playwright test",
     "test:unit": "vitest",
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false"

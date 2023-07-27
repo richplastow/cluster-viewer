@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { usePreferredColorScheme } from '@vueuse/core'
-import type { GLTFLoader, PerspectiveCamera, Matrix3 } from '@/types/ThreeTypes'
 import { Vector3 } from 'three'
 import { ref, watch } from 'vue'
+import { fixUrlForProd } from '@/env'
+import type { GLTFLoader, PerspectiveCamera, Matrix3 } from '@/types/ThreeTypes'
 
 const props = defineProps<{
   cameraPosition: Matrix3,
@@ -66,7 +67,7 @@ watch(camera, async () => {
         <DirectionalLight :position="[30, 100, 100]" />
         <DirectionalLight :position="[-30, 100, -100]" />
         <GLTFLoader
-          :url="modelUrl"
+          :url="fixUrlForProd(modelUrl)"
           ref="model"
         />
       </Scene>
