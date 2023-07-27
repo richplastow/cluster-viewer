@@ -1,7 +1,7 @@
 /** Defines how the model should currently be clustered. */
 enum ClusterMode {
   Material,
-  None,
+  Original,
   Shape,
 }
 

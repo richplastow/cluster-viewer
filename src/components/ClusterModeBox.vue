@@ -10,7 +10,7 @@ defineProps<{
 const buttons = [
   { mode:ClusterMode.Material, text:'Cluster by Material', title:'Click to arrange into clusters of the same material' },
   { mode:ClusterMode.Shape, text:'Cluster by Shape', title:'Click to arrange into clusters of similar shape' },
-  { mode:ClusterMode.None, text:'Original', title:'Click to show the original model' },
+  { mode:ClusterMode.Original, text:'Original', title:'Click to show the original model' },
 ]
 </script>
 

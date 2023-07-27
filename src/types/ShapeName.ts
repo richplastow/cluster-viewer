@@ -6,16 +6,30 @@ enum ShapeName {
   BeamSideways,
   /** Doesn't conform to any of the other shapes, so must be somewhat boxy. */
   Block,
-  /** A shape whose height is much greater than its width or depth. */
-  Pillar,
   /** A horizontal plane, like a floor or ceiling. */
   HorizontalPlane,
-  /** Provides a shape category when an Object3D has no geometry. */
+  /** A shape whose height is very much greater than its width or depth. */
+  Pillar,
+  /** A vertical plane, like a wall, which extends in the 'width' direction,
+   *  wider than it is tall. */
+  PlaneLandscapeFacing,
+  /** A vertical plane, like a wall, which extends in the 'depth' direction,
+   *  deeper than it is tall. */
+  PlaneLandscapeSideways,
+  /** A vertical plane, like a wall, which extends in the 'width' direction,
+   *  taller than it is wide. */
+  PlanePortraitFacing,
+  /** A vertical plane, like a wall, which extends in the 'depth' direction,
+   *  taller than it is deep. */
+  PlanePortraitSideways,
+  /** A vertical plane, like a wall, which extends in the 'width' direction,
+   *  roughly the same height and width. */
+  PlaneSquareFacing,
+  /** A vertical plane, like a wall, which extends in the 'depth' direction,
+   *  roughly the same height and depth. */
+  PlaneSquareSideways,
+  /** Provides a value of the ShapeName type for Object3Ds with no geometry. */
   Unknown,
-  /** A vertical plane, like a wall, which extends in the x direction. */
-  VerticalPlaneFacing,
-  /** A vertical plane, like a wall, which extends in the z direction. */
-  VerticalPlaneSideways,
 }
 
 export default ShapeName

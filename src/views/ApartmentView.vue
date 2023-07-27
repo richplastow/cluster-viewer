@@ -9,7 +9,7 @@ import type ModelInfo from '@/types/ModelInfo'
 const modelInfo = ref<null | ModelInfo>(null)
 const reportModelInfo = (info: ModelInfo) => modelInfo.value = info
 
-const selectedMode = ref(ClusterMode.None)
+const selectedMode = ref(ClusterMode.Original)
 const switchMode = (mode: ClusterMode) => selectedMode.value = mode
 </script>
 
@@ -21,6 +21,7 @@ const switchMode = (mode: ClusterMode) => selectedMode.value = mode
     :modelPosition="[-1, 0, 3]"
     :reportModelInfo="reportModelInfo"
     :selectedMode="selectedMode"
+    invisibleMaterialName="black"
     modelUrl="/models/apartment.glb"
   />
 </template>
