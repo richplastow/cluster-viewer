@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import ClusterMode from '@/types/ClusterMode'
 defineProps<{
-  isEnabled?: boolean,
-  mode: ClusterMode,
-  switchMode: (mode: ClusterMode) => void,
-  text: string,
-  title: string,
+  isEnabled?: boolean
+  mode: ClusterMode
+  switchMode: (mode: ClusterMode) => void
+  text: string
+  title: string
 }>()
 </script>
 
@@ -15,7 +15,9 @@ defineProps<{
     :class="isEnabled ? 'enabled' : ''"
     :tabindex="isEnabled ? 1 : -1"
     :title="title"
-  >{{ text }}</button>
+  >
+    {{ text }}
+  </button>
 </template>
 
 <style scoped>

@@ -1,7 +1,7 @@
 {
   "name": "cluster-viewer",
   "description": "Three.js + Vue 3 .glb viewer, with buttons to cluster objects by shape or color.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": false,
   "scripts": {
     "build-only": "vite build",

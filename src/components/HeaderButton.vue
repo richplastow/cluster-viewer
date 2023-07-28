@@ -2,11 +2,11 @@
 import type { Component } from 'vue'
 import { RouterLink } from 'vue-router'
 defineProps<{
-  icon?: Component,
-  isEnabled?: boolean,
-  text?: string,
-  title: string,
-  to: string,
+  icon?: Component
+  isEnabled?: boolean
+  text?: string
+  title: string
+  to: string
 }>()
 </script>
 

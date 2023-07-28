@@ -1,16 +1,28 @@
 <script setup lang="ts">
 import ClusterMode from '@/types/ClusterMode'
-import ClusterModeButton from './ClusterModeButton.vue';
+import ClusterModeButton from './ClusterModeButton.vue'
 
 defineProps<{
-  selectedMode: ClusterMode,
-  switchMode: (mode: ClusterMode) => void,
+  selectedMode: ClusterMode
+  switchMode: (mode: ClusterMode) => void
 }>()
 
 const buttons = [
-  { mode:ClusterMode.Shape, text:'Cluster by Shape', title:'Click to arrange into clusters of similar shape' },
-  { mode:ClusterMode.Color, text:'Cluster by Colour', title:'Click to arrange into clusters of the same colour' },
-  { mode:ClusterMode.Original, text:'Original', title:'Click to show the original model' },
+  {
+    mode: ClusterMode.Shape,
+    text: 'Cluster by Shape',
+    title: 'Click to arrange into clusters of similar shape',
+  },
+  {
+    mode: ClusterMode.Color,
+    text: 'Cluster by Colour',
+    title: 'Click to arrange into clusters of the same colour',
+  },
+  {
+    mode: ClusterMode.Original,
+    text: 'Original',
+    title: 'Click to show the original model',
+  },
 ]
 </script>
 

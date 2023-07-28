@@ -10,7 +10,7 @@ const props = defineProps<{
 // Generates a readable summary of the `modelInfo` object.
 const formatInfo = (
   info: null | ModelInfo,
-  key:'colorTally' | 'shapeTally',
+  key: 'colorTally' | 'shapeTally',
   plural: string,
   singular: string,
 ) => {

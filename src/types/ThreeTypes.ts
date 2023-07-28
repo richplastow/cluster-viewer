@@ -4,7 +4,7 @@ import { GLTFLoader, PerspectiveCamera, Mesh } from '@janvorisek/drie'
 export type GLTFLoader = typeof GLTFLoader
 
 /** A 3x1 matrix, typically used for position or rotation. */
-export type Matrix3 = [ number, number, number ]
+export type Matrix3 = [number, number, number]
 
 /** The Drie Object3D `Mesh` type. */
 export type Mesh = typeof Mesh

@@ -12,12 +12,12 @@ import type { GLTFLoader, Matrix3, Mesh, MeshArrayDict } from '@/types/ThreeType
 const { lerp } = MathUtils
 
 const props = defineProps<{
-  cameraPosition: Matrix3,
-  invisibleColorName?: ColorName,
-  modelPosition: Matrix3,
-  modelUrl: string,
-  reportModelInfo: (info: ModelInfo) => void,
-  selectedMode: ClusterMode,
+  cameraPosition: Matrix3
+  invisibleColorName?: ColorName
+  modelPosition: Matrix3
+  modelUrl: string
+  reportModelInfo: (info: ModelInfo) => void
+  selectedMode: ClusterMode
 }>()
 
 const model = ref<null | GLTFLoader>(null) // null before the model loads
@@ -27,10 +27,10 @@ const theme = usePreferredColorScheme() // tracks CSS prefers-color-scheme
 const meshes = ref<Mesh[]>([])
 
 /** A number between 0 and 1 which represents the current position in the
-  * 'tween' timeline. Reset to 0, every time the user clicks a 'Cluster' button. */
+ * 'tween' timeline. Reset to 0, every time the user clicks a 'Cluster' button. */
 const interpolation = ref(0)
 watch(() => props.selectedMode, async () => {
-  interpolation.value = 0
+    interpolation.value = 0
 })
 
 // Initialise variables and constants used by onAnimationFrame() which don't
@@ -39,9 +39,8 @@ let previousTimestamp = performance.now()
 const zAxis = new Vector3(0, 0, 1)
 let currentSidewaysAngle = 0
 
-// Updates the Three scene. Called approximately 60 times a second.
+/** Updates the Three scene. Called approximately 60 times a second. */
 const onAnimationFrame = () => {
-
   // Keep recording the duration of the most recent animation frame, even if the
   // model has not loaded yet, or the interpolation has ended.
   const currentTimestamp = performance.now()
@@ -68,7 +67,7 @@ const onAnimationFrame = () => {
   const nextSidewaysAngle = lerp(currentSidewaysAngle, targetAngle, tween)
   const deltaSidewaysAngle = nextSidewaysAngle - currentSidewaysAngle
   currentSidewaysAngle = nextSidewaysAngle
-  
+
   // Linearly interpolate each Mesh between its current and target offsets.
   // The slightly nonstandard use of lerp() provides an 'easing' effect, and
   // allows the animation to smoothly change from one target to another, mid-tween.
@@ -76,7 +75,7 @@ const onAnimationFrame = () => {
   // Also, update Mesh visibility to the next value, part way through the tween.
   // @TODO just switch mesh.visible once during a tween.
   // @TODO don't modify position and rotation of invisible Meshes.
-  meshes.value.forEach(mesh => {
+  meshes.value.forEach((mesh) => {
     const { shapeName, offset } = mesh.userData
     if (
       shapeName === ShapeName.PlaneLandscapeSideways ||
@@ -99,20 +98,20 @@ const onAnimationFrame = () => {
 // Based on https://stackoverflow.com/a/32038265
 const quaternion = new Quaternion()
 const rotateAroundWorldAxis = (mesh: Mesh, point: Vector3, axis: Vector3, angle: number) => {
-    quaternion.setFromAxisAngle(axis, angle)
-    mesh.applyQuaternion(quaternion)
-    mesh.position.sub(point)
-    mesh.position.applyQuaternion(quaternion)
-    mesh.position.add(point)
+  quaternion.setFromAxisAngle(axis, angle)
+  mesh.applyQuaternion(quaternion)
+  mesh.position.sub(point)
+  mesh.position.applyQuaternion(quaternion)
+  mesh.position.add(point)
 }
 
 // Identifies a Mesh's material as 'Red' or 'Cyan', etc.
 // @TODO Memoize the result, since identical `color` will often be encountered
 const rgbToColorName = (color?: Color) => {
-  if (! color) return ColorName.Unknown
+  if (!color) return ColorName.Unknown
 
   // Get the hue, saturation and lightness.
-  const hsl = { h:0, s:0, l:0 }
+  const hsl = { h: 0, s: 0, l: 0 }
   color.getHSL(hsl)
   const { h, s, l } = hsl
 
@@ -142,7 +141,7 @@ const rgbToColorName = (color?: Color) => {
 // here. For example, `1.2` is used to differentiate between landscape, portrait
 // and square planes.
 const boundingBoxToShapeName = (mesh?: Mesh) => {
-  if (! mesh?.geometry) return ShapeName.Unknown // probably never encountered
+  if (!mesh?.geometry) return ShapeName.Unknown // probably never encountered
   const boundingBox: Box3 = mesh.geometry.boundingBox
   const dimensions = new Vector3()
   boundingBox.getSize(dimensions) // note that y is depth, not height
@@ -152,34 +151,39 @@ const boundingBoxToShapeName = (mesh?: Mesh) => {
   const h5 = height * 5
   switch (true) {
     // A shape whose width is much greater than its height or depth.
-    case width > h5 && width > d5: return ShapeName.BeamFacing
+    case width > h5 && width > d5:
+      return ShapeName.BeamFacing
     // A shape whose depth is much greater than its width or height.
-    case depth > w5 && depth > h5: return ShapeName.BeamSideways
+    case depth > w5 && depth > h5:
+      return ShapeName.BeamSideways
     // A horizontal plane, like a floor or ceiling.
-    case h5 < width && h5 < depth: return ShapeName.HorizontalPlane
+    case h5 < width && h5 < depth:
+      return ShapeName.HorizontalPlane
     // A shape whose height is very much greater than its width or depth.
-    case height > w5 * 2 && height > d5 * 2: return ShapeName.Pillar
+    case height > w5 * 2 && height > d5 * 2:
+      return ShapeName.Pillar
     // A vertical plane which extends in the 'width' direction.
     case d5 < width && d5 < height:
       return width > height * 1.2
         ? ShapeName.PlaneLandscapeFacing
         : height > width * 1.2
-          ? ShapeName.PlanePortraitFacing
-          : ShapeName.PlaneSquareFacing
+        ? ShapeName.PlanePortraitFacing
+        : ShapeName.PlaneSquareFacing
     // A vertical plane which extends in the 'depth' direction.
     case w5 < height && w5 < depth:
       return depth > height * 1.2
         ? ShapeName.PlaneLandscapeSideways
         : height > depth * 1.2
-          ? ShapeName.PlanePortraitSideways
-          : ShapeName.PlaneSquareSideways
+        ? ShapeName.PlanePortraitSideways
+        : ShapeName.PlaneSquareSideways
     // Doesn't conform to any of the other shapes, so must be somewhat boxy.
-    default: return ShapeName.Block
+    default:
+      return ShapeName.Block
   }
 }
 
 const getBoundingBoxOffset = (origin: Vector3, mesh?: Mesh): Vector3 => {
-  if (! mesh?.geometry) return new Vector3(0, 0, 0) // probably never encountered
+  if (!mesh?.geometry) return new Vector3(0, 0, 0) // probably never encountered
   const boundingBox: Box3 = mesh.geometry.boundingBox
   const center = new Vector3()
   boundingBox.getCenter(center)
@@ -200,20 +204,29 @@ const getColorClusterCenter = (
   // Return a bespoke arrangement for the apartment.glb's color cluster.
   if (totalItems === 4) {
     switch (Number(key)) {
-      case ColorName.Grey: return new Vector3(-spacing * 0.7, spacing, 0)
-      case ColorName.Red: return new Vector3(-spacing * 0.7, 0, 0)
-      case ColorName.White: return new Vector3(-spacing * 0.7, spacing * 2.3, 0)
-      case ColorName.Yellow: return new Vector3(spacing * 0.5, 0, 0)
+      case ColorName.Grey:
+        return new Vector3(-spacing * 0.7, spacing, 0)
+      case ColorName.Red:
+        return new Vector3(-spacing * 0.7, 0, 0)
+      case ColorName.White:
+        return new Vector3(-spacing * 0.7, spacing * 2.3, 0)
+      case ColorName.Yellow:
+        return new Vector3(spacing * 0.5, 0, 0)
     }
   }
   // Return a bespoke arrangement for the building.glb's color cluster.
   if (totalItems === 5) {
     switch (Number(key)) {
-      case ColorName.Cyan: return new Vector3(spacing * -2, spacing * 5,  0)
-      case ColorName.Grey: return new Vector3(spacing * 0.9, 0, 0)
-      case ColorName.Red: return new Vector3(spacing * -2, spacing * 2.5,  0)
-      case ColorName.White: return new Vector3(-spacing, 0, 0)
-      case ColorName.Yellow: return new Vector3(spacing * -2, spacing,  0)
+      case ColorName.Cyan:
+        return new Vector3(spacing * -2, spacing * 5, 0)
+      case ColorName.Grey:
+        return new Vector3(spacing * 0.9, 0, 0)
+      case ColorName.Red:
+        return new Vector3(spacing * -2, spacing * 2.5, 0)
+      case ColorName.White:
+        return new Vector3(-spacing, 0, 0)
+      case ColorName.Yellow:
+        return new Vector3(spacing * -2, spacing, 0)
     }
   }
   // Otherwise, just arrange the clusters in a row - handy during dev.
@@ -230,21 +243,31 @@ const getShapeClusterCenter = (
   // Return a bespoke arrangement for the building.glb's shape cluster.
   if (totalItems === 4) {
     switch (Number(key)) {
-      case ShapeName.BeamSideways: return new Vector3(spacing * 0.4, 0, 0)
-      case ShapeName.Block: return new Vector3(spacing * -2, spacing, 0)
-      case ShapeName.Pillar: return new Vector3(spacing * -0.2, spacing * -0.15, 47)
-      case ShapeName.HorizontalPlane: return new Vector3(-spacing, 0, 0)
+      case ShapeName.BeamSideways:
+        return new Vector3(spacing * 0.4, 0, 0)
+      case ShapeName.Block:
+        return new Vector3(spacing * -2, spacing, 0)
+      case ShapeName.Pillar:
+        return new Vector3(spacing * -0.2, spacing * -0.15, 47)
+      case ShapeName.HorizontalPlane:
+        return new Vector3(-spacing, 0, 0)
     }
   }
   if (totalItems === 6) {
     // Return a bespoke arrangement for the apartment.glb's shape cluster.
     switch (Number(key)) {
-      case ShapeName.PlaneLandscapeFacing: return new Vector3(spacing * -1.32, 0, 0)
-      case ShapeName.PlaneLandscapeSideways: return new Vector3(spacing * -1.32, spacing, 0)
-      case ShapeName.PlanePortraitFacing: return new Vector3(0, 0, 0)
-      case ShapeName.PlanePortraitSideways: return new Vector3(0, spacing * 0.97, 0)
-      case ShapeName.PlaneSquareFacing: return new Vector3(spacing * 0.88, spacing * 0.44, 0)
-      case ShapeName.PlaneSquareSideways: return new Vector3(spacing * 0.88, spacing * 0.6, 0)
+      case ShapeName.PlaneLandscapeFacing:
+        return new Vector3(spacing * -1.32, 0, 0)
+      case ShapeName.PlaneLandscapeSideways:
+        return new Vector3(spacing * -1.32, spacing, 0)
+      case ShapeName.PlanePortraitFacing:
+        return new Vector3(0, 0, 0)
+      case ShapeName.PlanePortraitSideways:
+        return new Vector3(0, spacing * 0.97, 0)
+      case ShapeName.PlaneSquareFacing:
+        return new Vector3(spacing * 0.88, spacing * 0.44, 0)
+      case ShapeName.PlaneSquareSideways:
+        return new Vector3(spacing * 0.88, spacing * 0.6, 0)
     }
   }
   // Otherwise, just arrange the clusters in a row - handy during dev.
@@ -258,7 +281,7 @@ const onModelLoaded = () => {
   // Populate the `meshes` reference with an array of Meshes, which will each be
   // treated as an individually-positionable 3D object.
   // `children[0].children[0].children` depends on the structure of the models.
-  meshes.value = model.value.three.children[0].children[0].children  
+  meshes.value = model.value.three.children[0].children[0].children
 
   // Tell each Mesh which color cluster it's in, and group Meshes by color name.
   // The color is determined by the material's `color` property.
@@ -317,7 +340,7 @@ const onModelLoaded = () => {
   // Use `props.cameraPosition[2]` as a proxy for model size.
   const clusterSpacing = props.cameraPosition[2] * 0.7 // gap between clusters
   const modelSpacing = props.cameraPosition[2] * 0.03 // gap within a cluster
-  
+
   // Calculate the central position of each cluster.
   const colorClusterCenters = Object.keys(meshesByColorName).reduce(
     (accumulator: Vector3[], key, i) => {
@@ -335,9 +358,9 @@ const onModelLoaded = () => {
   // Tell each Mesh its geometry's offsets from the original starting position.
   // First, overlapping at the exact center of the three cluster modes.
   interface UserDataGroup<T> {
-    [ClusterMode.Color]: T,
-    [ClusterMode.Original]: T,
-    [ClusterMode.Shape]: T,
+    [ClusterMode.Color]: T
+    [ClusterMode.Original]: T
+    [ClusterMode.Shape]: T
   }
   interface UserData {
     visible: UserDataGroup<boolean>
@@ -346,7 +369,7 @@ const onModelLoaded = () => {
     shapeName: ShapeName
     offset: UserDataGroup<Vector3>
   }
-  meshes.value.forEach(mesh => {
+  meshes.value.forEach((mesh) => {
     const child = mesh.children[0] // contains the geometry
     const data: UserData = mesh.userData
     const colorClusterCenter = colorClusterCenters[data.colorName]
@@ -374,7 +397,7 @@ const onModelLoaded = () => {
     const rankCount = Math.floor(Math.sqrt(tally))
     const fileCount = Math.floor(tally / rankCount)
     meshes
-      .filter(mesh => mesh.userData.colorName !== props.invisibleColorName)
+      .filter((mesh) => mesh.userData.colorName !== props.invisibleColorName)
       .forEach((mesh, i) => {
         const shape: Vector3 = mesh.userData.offset[ClusterMode.Shape]
         const color: Vector3 = mesh.userData.offset[ClusterMode.Color]
@@ -421,7 +444,6 @@ const onModelLoaded = () => {
     )
   })
 }
-
 </script>
 
 <template>
@@ -454,7 +476,6 @@ const onModelLoaded = () => {
           ref="model"
         />
       </Scene>
-
     </Renderer>
   </main>
 </template>
