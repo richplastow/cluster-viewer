@@ -1,4 +1,4 @@
-/* color palette based on <https://github.com/vuejs/theme> */
+/* Color palette based on <https://github.com/vuejs/theme>. */
 :root {
   --vt-c-white: #ffffff;
   --vt-c-white-soft: #f8f8f8;
@@ -18,8 +18,7 @@
   --cv-c-beige-1: #909070;
   --cv-c-beige-2: #606050;
   --cv-c-brick-1: #907070;
-  --cv-c-brick-2: #605050;
-  --cv-c-brick-3: #cba6a6;
+  --cv-c-brick-2: #cba6a6;
 
   --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
   --vt-c-divider-light-2: rgba(60, 60, 60, 0.12);
@@ -34,25 +33,22 @@
   --fast: 200ms;
 }
 
-/* semantic color variables for this project */
+/* Semantic color variables for this project. */
 :root {
-  --color-background: var(--vt-c-white);
+  --color-background: var(--cv-c-neutral-3);
   --color-background-soft: var(--vt-c-white-soft);
   --color-background-soft-translucent: var(--vt-c-white-soft-translucent);
-  --color-background-mute: var(--vt-c-white-mute);
 
   --color-background-button-neutral: var(--vt-c-white-mute);
   --color-background-button-beige: var(--cv-c-beige-1);
   --color-background-button-beige-hover: var(--cv-c-beige-2);
-  --color-background-button-brick: var(--cv-c-brick-1);
-  --color-background-button-brick-hover: var(--cv-c-brick-3);
+  --color-background-button-brick-hover: var(--cv-c-brick-2);
 
   --color-border: var(--vt-c-divider-light-2);
   --color-border-hover: var(--vt-c-divider-light-1);
 
   --color-heading: var(--vt-c-text-light-1);
   --color-text: var(--vt-c-text-light-2);
-  --color-text-hover: var(--vt-c-text-light-1);
   --color-button-text: var(--vt-c-white-mute);
   --color-button-text-neutral: var(--cv-c-neutral-3);
   --color-button-text-header: var(--vt-c-black-mute);
@@ -60,21 +56,17 @@
   --color-button-text-header-hover: var(--vt-c-black);
   --color-big-link-text: var(--cv-c-beige-1);
   --color-big-link-text-hover: var(--vt-c-white-mute);
-
-  --section-gap: 160px;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-background: var(--vt-c-black);
+    --color-background: var(--cv-c-neutral-1);
     --color-background-soft: var(--vt-c-black-soft);
     --color-background-soft-translucent: var(--vt-c-black-soft-translucent);
-    --color-background-mute: var(--vt-c-black-mute);
 
     --color-background-button-neutral: var(--cv-c-neutral-1);
     --color-background-button-beige: var(--cv-c-beige-2);
     --color-background-button-beige-hover: var(--cv-c-beige-1);
-    --color-background-button-brick: var(--cv-c-brick-2);
     --color-background-button-brick-hover: var(--cv-c-brick-1);
 
     --color-border: var(--vt-c-divider-dark-2);
@@ -82,7 +74,6 @@
 
     --color-heading: var(--vt-c-text-dark-1);
     --color-text: var(--vt-c-text-dark-2);
-    --color-text-hover: var(--vt-c-text-dark-1);
     --color-button-text: var(--cv-c-neutral-3);
     --color-button-text-neutral: var(--cv-c-neutral-2);
     --color-button-text-header: var(--vt-c-white-mute);

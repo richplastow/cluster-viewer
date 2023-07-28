@@ -2,9 +2,15 @@
 
 __Three.js + Vue 3 .glb viewer, with buttons to cluster objects by shape or color.__
 
-- __Version:__ 0.1.1
+- __Version:__ 0.1.2
 - __Repo:__ <https://github.com/richplastow/cluster-viewer>
 - __Homepage:__ <https://richplastow.com/cluster-viewer>
+
+## Approach
+
+- A bare-bones solution, with tidy code and a presentable UI
+- Keep within the `npm init vue@latest` guardrails, for a 'standard' Vue 3 app
+- The app is simple enough not to need a UI library or global state system
 
 ## Next steps
 

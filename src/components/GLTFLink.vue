@@ -100,4 +100,20 @@ h4 {
 div:hover > h4 {
   color: var(--color-big-link-text-hover);
 }
+
+/* Breakpoints based on <https://tailwindcss.com/docs/responsive-design>. */
+/* sm:640px, md:768px, lg:1024px, xl:1280px, 2xl:1536px */
+@media (min-width: 768px) {
+  div {
+    width: 20rem;
+    height: 14rem;
+  }
+}
+@media (min-width: 1024px) {
+  div {
+    width: 28rem;
+    height: 18rem;
+  }
+}
+
 </style>

@@ -52,6 +52,7 @@ nav {
   padding: 0.2rem;
   background-color: var(--color-background-soft);
   font-size: 1rem;
+  text-align: left;
   z-index: 10;
 }
 </style>

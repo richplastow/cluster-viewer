@@ -54,6 +54,7 @@ aside {
   background-color: var(--color-background-soft-translucent);
   border-radius: 4px;
   font-size: 1.3rem;
+  text-align: left;
   z-index: 10;
 }
 h1 {

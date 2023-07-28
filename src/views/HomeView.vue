@@ -14,7 +14,7 @@ import GLTFLink from '@/components/GLTFLink.vue'
         text="View the Apartment"
       />
     </RouterLink>
-    <br />
+    &nbsp;
     <RouterLink to="/building/">
       <GLTFLink
         :cameraPosition="[0, 50, 300]"
@@ -29,8 +29,8 @@ import GLTFLink from '@/components/GLTFLink.vue'
 
 <style scoped>
 aside {
-  position: fixed;
-  left: 1rem;
+  display: inline-block;
+  position: relative;
   top: 5rem;
   width: 18rem;
   line-height: 1.1;
@@ -39,6 +39,21 @@ aside {
   background-color: var(--color-background-soft);
   border-radius: 4px;
   font-size: 1.3rem;
+  text-align: left;
   z-index: 10;
 }
+
+/* Breakpoints based on <https://tailwindcss.com/docs/responsive-design>. */
+/* sm:640px, md:768px, lg:1024px, xl:1280px, 2xl:1536px */
+@media (min-width: 768px) {
+  aside {
+    width: 42rem;
+  }
+}
+@media (min-width: 1024px) {
+  aside {
+    width: 58rem;
+  }
+}
+/* @TODO no need to scroll on small landscape screen sizes */
 </style>
