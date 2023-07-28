@@ -11,6 +11,8 @@ __Three.js + Vue 3 .glb viewer, with buttons to cluster objects by shape or colo
 - A bare-bones solution, with tidy code and a presentable UI
 - Keep within the `npm init vue@latest` guardrails, for a 'standard' Vue 3 app
 - The app is simple enough not to need a UI library or global state system
+- Allows for slightly updated versions of the glTF models to be swapped in
+- Heads toward a more general purpose app, which can deal with any glTF model
 
 ## Next steps
 

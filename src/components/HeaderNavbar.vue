@@ -13,16 +13,16 @@ const buttons = [
     to: '/',
   },
   {
-    name: 'apartment',
-    text: 'Apartment',
-    title: 'Click to view the Apartment',
-    to: '/apartment/',
-  },
-  {
     name: 'building',
     text: 'Building',
     title: 'Click to view the Building',
     to: '/building/',
+  },
+  {
+    name: 'apartment',
+    text: 'Apartment',
+    title: 'Click to view the Apartment',
+    to: '/apartment/',
   },
 ]
 </script>

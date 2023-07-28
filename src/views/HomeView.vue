@@ -5,16 +5,6 @@ import GLTFLink from '@/components/GLTFLink.vue'
 <template>
   <aside>
     <h1>Welcome to<br />Cluster Viewer</h1>
-    <RouterLink to="/apartment/">
-      <GLTFLink
-        :cameraPosition="[6.5, 6.5, 6.5]"
-        :fov="35"
-        :modelPosition="[-1, -1, 3]"
-        modelUrl="/models/apartment.glb"
-        text="View the Apartment"
-      />
-    </RouterLink>
-    &nbsp;
     <RouterLink to="/building/">
       <GLTFLink
         :cameraPosition="[0, 50, 300]"
@@ -22,6 +12,16 @@ import GLTFLink from '@/components/GLTFLink.vue'
         :modelPosition="[0, -45, 0]"
         modelUrl="/models/building.glb"
         text="View the Building"
+      />
+    </RouterLink>
+    &nbsp;
+    <RouterLink to="/apartment/">
+      <GLTFLink
+        :cameraPosition="[6.5, 6.5, 6.5]"
+        :fov="35"
+        :modelPosition="[-1, -1, 3]"
+        modelUrl="/models/apartment.glb"
+        text="View the Apartment"
       />
     </RouterLink>
   </aside>
