@@ -13,7 +13,7 @@ const buttons = [
 </script>
 
 <template>
-  <header>
+  <nav>
     <HeaderButton
       v-for="{ name, Icon, text, title, to } in buttons"
       :icon="Icon"
@@ -23,11 +23,11 @@ const buttons = [
       :text="text"
       :title="title"
     />
-  </header>
+  </nav>
 </template>
 
 <style scoped>
-header {
+nav {
   position: fixed;
   left: 0;
   top: 0;

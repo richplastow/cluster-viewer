@@ -29,10 +29,8 @@ const meshes = ref<Mesh[]>([])
 /** A number between 0 and 1 which represents the current position in the
   * 'tween' timeline. Reset to 0, every time the user clicks a 'Cluster' button. */
 const interpolation = ref(0)
-// const previousClusterMode = ref(props.selectedMode)
-watch(() => props.selectedMode, async (_next, _previous) => {
+watch(() => props.selectedMode, async () => {
   interpolation.value = 0
-  // previousClusterMode.value = previous
 })
 
 // Initialise variables and constants used by onAnimationFrame() which don't
@@ -380,20 +378,21 @@ const onModelLoaded = () => {
       .forEach((mesh, i) => {
         const shape: Vector3 = mesh.userData.offset[ClusterMode.Shape]
         const color: Vector3 = mesh.userData.offset[ClusterMode.Color]
-        const colorIndex = Number(mesh.userData.colorName)
+        if (Number(shapeName) === ShapeName.Block) { // 'Block' is a special case
+          const colorIndex = Number(mesh.userData.colorName)
+          const rank = i % rankCount
+          const file = (i - rank) / fileCount
+          shape.x += rank * modelSpacing * 4
+          shape.y += file * modelSpacing * 4.5
+          color.x += rank * modelSpacing * 4
+          color.y += file * modelSpacing *
+            (colorIndex === ColorName.Yellow ? 1 : 1.5) // yellow apartments are smaller
+          return
+        }
+        const iicc = mesh.userData.indexInColorCluster // @TODO avoid rough fixes like this
         switch (Number(shapeName)) {
-          case ShapeName.Block:
-            const rank = i % rankCount
-            const file = (i - rank) / fileCount
-            shape.x += rank * modelSpacing * 4
-            shape.y += file * modelSpacing * 4.5
-            color.x += rank * modelSpacing * 4
-            color.y += file * modelSpacing *
-              (colorIndex === ColorName.Yellow ? 1 : 1.5) // yellow apartments are smaller
-            break
           case ShapeName.HorizontalPlane:
             shape.z += i * modelSpacing
-            const iicc = mesh.userData.indexInColorCluster // @TODO avoid rough fixes like this
             color.z += (iicc >= 43 ? iicc - 22 : iicc) * modelSpacing
             break
           case ShapeName.Pillar:
@@ -410,7 +409,7 @@ const onModelLoaded = () => {
           case ShapeName.PlaneSquareFacing:
           case ShapeName.PlaneSquareSideways:
             shape.y += i * modelSpacing
-            color.y += mesh.userData.indexInColorCluster * modelSpacing // @TODO avoid rough fixes like this
+            color.y += iicc * modelSpacing // @TODO avoid rough fixes like this
             break
           case ShapeName.BeamSideways:
             shape.x += i * modelSpacing

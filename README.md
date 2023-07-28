@@ -1,10 +1,29 @@
 # cluster-viewer
 
-__Three.js + Vue 3 .glb viewer, with buttons to cluster objects by material or shape.__
+__Three.js + Vue 3 .glb viewer, with buttons to cluster objects by shape or color.__
 
-- __Version:__ 0.0.1
+- __Version:__ 0.1.0
 - __Repo:__ <https://github.com/richplastow/cluster-viewer>
 - __Homepage:__ <https://richplastow.com/cluster-viewer>
+
+## Next steps
+
+1. __Accessibility:__ Add aria-roles, and test and improve text-to-speech and
+   keyboard access
+2. __Internationalization:__ Currently UI text is hard coded in British English
+3. __SEO:__ Add Open Graph metadata, for better searchability and social media
+   previews - and then add a share button
+4. __Offline Mode:__ With a manifest.json file, for iOS's 'Add to Home Screen'
+5. __Icons:__ A full set of icons and native theme, eg using
+   [RealFaviconGenerator](https://realfavicongenerator.net)
+6. __Tracking:__ Some simple usage analytics would be interesting, or even
+   [Sentry](https://sentry.io/)
+7. __Tidier Clusters:__ They should stack up in size-order, and all sit on the
+   ground plane
+8. __Model Upload:__ Let the user upload or link to any glTF file
+9. __Tests and Documentation:__ Unit tests, end-to-end tests, and better
+   [JSDoc](https://jsdoc.app/)
+10. __Fix @TODOs:__ Address various issues in the code marked `@TODO`
 
 ## Recommended IDE Setup
 
@@ -40,7 +59,7 @@ npm run dev
 ### Type-Check, Compile and Minify for Production
 
 ```sh
-npm run build
+npm start
 ```
 
 ### Run Unit Tests with [Vitest](https://vitest.dev/)

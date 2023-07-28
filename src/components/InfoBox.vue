@@ -67,6 +67,6 @@ p {
   transition: opacity var(--fast);
 }
 p.loaded {
-  opacity: 1;
+  opacity: 0.6;
 }
 </style>
