@@ -2,7 +2,7 @@
 import { usePreferredColorScheme } from '@vueuse/core'
 import { Vector3 } from 'three'
 import { ref, watch } from 'vue'
-import { fixUrlForProd } from '@/env'
+import prependBaseToProdUrl from '@/lib/prependBaseToProdUrl'
 import type { GLTFLoader, PerspectiveCamera, Matrix3 } from '@/types/ThreeTypes'
 
 const props = defineProps<{
@@ -65,7 +65,7 @@ watch(camera, async () => {
       <Scene :background="theme === 'dark' ? '#333' : '#ccc'">
         <DirectionalLight :position="[30, 100, 100]" :intensity="theme === 'dark' ? 0.7 : 2" />
         <DirectionalLight :position="[-30, 100, -100]" :intensity="theme === 'dark' ? 0.2 : 1.5" />
-        <GLTFLoader :url="fixUrlForProd(modelUrl)" ref="model" />
+        <GLTFLoader :url="prependBaseToProdUrl(modelUrl)" ref="model" />
       </Scene>
     </Renderer>
     <h4>{{ text }} ▶</h4>

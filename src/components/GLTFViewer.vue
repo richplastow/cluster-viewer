@@ -2,7 +2,7 @@
 import { usePreferredColorScheme } from '@vueuse/core'
 import { Box3, Color, MathUtils, Quaternion, Vector3 } from 'three'
 import { ref, watch } from 'vue'
-import { fixUrlForProd } from '@/env'
+import prependBaseToProdUrl from '@/lib/prependBaseToProdUrl'
 import ClusterMode from '@/types/ClusterMode'
 import ColorName from '@/types/ColorName'
 import ShapeName from '@/types/ShapeName'
@@ -471,7 +471,7 @@ const onModelLoaded = () => {
         />
         <GLTFLoader
           :position="modelPosition"
-          :url="fixUrlForProd(modelUrl)"
+          :url="prependBaseToProdUrl(modelUrl)"
           @load="onModelLoaded"
           ref="model"
         />
