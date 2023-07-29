@@ -2,7 +2,7 @@
 import { usePreferredColorScheme } from '@vueuse/core'
 import { Box3, Color, MathUtils, Quaternion, Vector3 } from 'three'
 import { ref, watch } from 'vue'
-import prependBaseToProdUrl from '@/lib/prependBaseToProdUrl'
+import { prependBaseToProdUrl } from '@/helpers'
 import ClusterMode from '@/types/ClusterMode'
 import ColorName from '@/types/ColorName'
 import ShapeName from '@/types/ShapeName'

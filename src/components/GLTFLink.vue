@@ -2,7 +2,7 @@
 import { usePreferredColorScheme } from '@vueuse/core'
 import { Vector3 } from 'three'
 import { ref, watch } from 'vue'
-import prependBaseToProdUrl from '@/lib/prependBaseToProdUrl'
+import { prependBaseToProdUrl } from '@/helpers'
 import type { GLTFLoader, PerspectiveCamera, Matrix3 } from '@/types/ThreeTypes'
 
 const props = defineProps<{
