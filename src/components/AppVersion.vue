@@ -3,7 +3,7 @@ import { APP_VERSION } from '@/constants'
 </script>
 
 <template>
-  <span>{{ APP_VERSION }}</span>
+  <span class="app-version">{{ APP_VERSION }}</span>
 </template>
 
 <style scoped>

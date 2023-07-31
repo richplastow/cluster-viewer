@@ -2,7 +2,7 @@
 
 __Three.js + Vue 3 .glb viewer, with buttons to cluster objects by shape or color.__
 
-- __Version:__ 0.1.8
+- __Version:__ 0.1.9
 - __Repo:__ <https://github.com/richplastow/cluster-viewer>
 - __Homepage:__ <https://richplastow.com/cluster-viewer>
 
@@ -105,3 +105,5 @@ npm run lint
 
 <!-- 188,300,987 bytes (230.6 MB on disk) for 13,822 items -->
 <!-- 193,381,429 bytes (231.2 MB on disk) for 13,904 items after `npm i @vueuse/core` -->
+<!-- 194,472,829 bytes (232.3 MB on disk) for 13,904 items -->
+<!-- 194,472,829 bytes (232.3 MB on disk) for 13,904 items -->

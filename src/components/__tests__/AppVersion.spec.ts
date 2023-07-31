@@ -6,7 +6,7 @@ import packageJson from '../../../package.json'
 
 describe('AppVersion', () => {
   it('renders properly', () => {
-    const wrapper = mount(AppVersion, { props: { msg: 'Hello Vitest' } })
+    const wrapper = mount(AppVersion)
     expect(wrapper.text()).toContain(packageJson.version)
   })
 })

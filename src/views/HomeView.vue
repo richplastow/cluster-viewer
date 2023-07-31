@@ -4,7 +4,7 @@ import GLTFLink from '@/components/GLTFLink.vue'
 
 <template>
   <aside>
-    <h1>Welcome to<br />Cluster Viewer</h1>
+    <h1>Welcome to <br />Cluster Viewer</h1>
     <RouterLink to="/building/">
       <GLTFLink
         :cameraPosition="[0, 50, 300]"
