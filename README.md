@@ -2,7 +2,7 @@
 
 __Three.js + Vue 3 .glb viewer, with buttons to cluster objects by shape or color.__
 
-- __Version:__ 0.1.5
+- __Version:__ 0.1.6
 - __Repo:__ <https://github.com/richplastow/cluster-viewer>
 - __Homepage:__ <https://richplastow.com/cluster-viewer>
 
@@ -67,7 +67,7 @@ npm install
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
+### Type-Check, Compile, Minify and Serve Locally for Production
 
 ```sh
 npm start

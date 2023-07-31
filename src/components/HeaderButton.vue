@@ -1,19 +1,27 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import type { Component } from 'vue'
 import { RouterLink } from 'vue-router'
-defineProps<{
+
+const { icon, isEnabled, isWide } = defineProps<{
   icon?: Component
   isEnabled?: boolean
+  isWide?: boolean
   text?: string
   title: string
   to: string
 }>()
+
+const linkClass = computed(
+  () => `${icon ? 'icon' : 'text'}${isEnabled ? ' enabled' : ''}${isWide ? ' wide' : ''}`
+)
+
 </script>
 
 <template>
   <RouterLink
     :to="to"
-    :class="`${isEnabled ? 'enabled' : ''} ${icon ? 'icon' : 'text'}`"
+    :class="linkClass"
     :tabindex="isEnabled ? 1 : -1"
     :title="title"
   >
@@ -26,7 +34,7 @@ defineProps<{
 a {
   display: inline-block;
   margin: 0 0.2rem 0.5rem 0;
-  padding: 0.5rem;
+  padding: 0.45rem 0.5rem 0.55rem;
   line-height: 1.2rem;
   background-color: transparent;
   color: var(--color-button-text-neutral);
@@ -48,6 +56,10 @@ a.enabled {
   border-color: var(--color-border);
   color: var(--color-button-text-header);
   pointer-events: auto;
+}
+a.wide {
+  padding-left: 1.2rem;
+  padding-right: 1.2rem;
 }
 a:hover {
   border-color: var(--color-border-hover);

@@ -7,6 +7,9 @@ process.env.VITE_APP_VERSION = require('./package.json').version
 // https://vitejs.dev/config/
 export default defineConfig({
   base: '/cluster-viewer/',
+  build: {
+    outDir: 'docs',
+  },
   plugins: [
     vue(),
   ],

@@ -45,8 +45,8 @@ const infoText = computed(() => {
 <style scoped>
 aside {
   position: fixed;
-  left: 1rem;
   top: 5rem;
+  left: 1rem;
   width: 18rem;
   height: 5.5rem;
   line-height: 1.5;
