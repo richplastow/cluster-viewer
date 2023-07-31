@@ -460,7 +460,7 @@ const precalculateClusters = (model: GLTFLoader) => {
       <GLTFScene
         :modelPosition="modelPosition"
         :modelUrl="modelUrl"
-        :onModelReady="precalculateClusters"
+        @modelReady="precalculateClusters"
       />
     </GLTFRenderer>
   </main>

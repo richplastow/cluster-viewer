@@ -5,14 +5,17 @@ import { ref } from 'vue'
 import { prependBaseToProdUrl } from '@/helpers'
 import type { GLTFLoader as GLTFLoaderType, Matrix3 } from '@/types/ThreeTypes'
 
-const { onModelReady } = defineProps<{
+const emit = defineEmits<{
+  /** Called with the GLTFLoader component as an argument, when the model loads. */
+  (e: 'modelReady', model: GLTFLoaderType): void
+}>()
+
+defineProps<{
   /** Sets the GLTFLoader component's `position` prop.
    *  @default [0,0,0] */
   modelPosition?: Matrix3
   /** Sets the GLTFLoader component's `url` prop. Relative to the public/ dir. */
   modelUrl: string
-  /** Called with the GLTFLoader component as an argument, when the model loads. */
-  onModelReady: (model: GLTFLoaderType) => void
 }>()
 
 /** Starts as `null`, and then becomes a reference to the GLTFLoader component
@@ -23,7 +26,7 @@ const onModelLoaded = () => {
     throw Error('GLTFScene: onModelLoaded() called while `modelRef` is still null')
   if (! modelRef.value?.three?.children[0]?.children[0]?.children)
     throw Error('GLTFScene: The model is not structured as expected')
-  onModelReady(modelRef.value as GLTFLoaderType)
+  emit('modelReady', modelRef.value)
 }
 
 const theme = usePreferredColorScheme() // tracks CSS prefers-color-scheme

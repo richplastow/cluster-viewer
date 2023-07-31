@@ -18,7 +18,7 @@ const didSetup = ref(false)
 const camera = ref<null | PerspectiveCameraType>(null)
 
 /** Starts as `null`, and then becomes a reference to the GLTFLoader component
- *  as soon as the model has loaded, when GLTFScene calls onModelReady(). */
+ *  as soon as the model has loaded, when GLTFScene emits 'modelReady'. */
 const model = ref<null | GLTFLoader>(null) // @TODO maybe refactor into useGLTFModel()
 const onModelReady = (m: GLTFLoader) => model.value = m
 
@@ -68,7 +68,7 @@ watch(camera, async () => {
       />
       <GLTFScene
         :modelUrl="modelUrl"
-        :onModelReady="onModelReady"
+        @modelReady="onModelReady"
       />
     </GLTFRenderer>
     <h4>{{ text }} ▶</h4>
