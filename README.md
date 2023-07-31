@@ -2,7 +2,7 @@
 
 __Three.js + Vue 3 .glb viewer, with buttons to cluster objects by shape or color.__
 
-- __Version:__ 0.1.7
+- __Version:__ 0.1.8
 - __Repo:__ <https://github.com/richplastow/cluster-viewer>
 - __Homepage:__ <https://richplastow.com/cluster-viewer>
 
@@ -21,8 +21,7 @@ __Three.js + Vue 3 .glb viewer, with buttons to cluster objects by shape or colo
 2. __Internationalization:__ Currently UI text is hard coded in British English
 3. __Tests and Documentation:__ More unit tests and end-to-end tests, and better
    [JSDoc](https://jsdoc.app/)
-4. __Deep Links:__ Fix direct navigation to
-  [/cluster-viewer/apartment/](https://richplastow.com/cluster-viewer/apartment/)
+4. __Orbit Controls:__ Limit how far the user can zoom, and provide a reset
 5. __SEO:__ Add Open Graph metadata, for better searchability and social media
    previews - and then add a share button
 6. __Offline Mode:__ With a manifest.json file, for iOS's 'Add to Home Screen'
