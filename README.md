@@ -2,7 +2,7 @@
 
 __Three.js + Vue 3 .glb viewer, with buttons to cluster objects by shape or color.__
 
-- __Version:__ 0.1.9
+- __Version:__ 0.2.0
 - __Repo:__ <https://github.com/richplastow/cluster-viewer>
 - __Homepage:__ <https://richplastow.com/cluster-viewer>
 
@@ -27,8 +27,8 @@ __Three.js + Vue 3 .glb viewer, with buttons to cluster objects by shape or colo
 6. __Offline Mode:__ With a manifest.json file, for iOS's 'Add to Home Screen'
 7. __Icons:__ A full set of icons and native theme, eg using
    [RealFaviconGenerator](https://realfavicongenerator.net)
-8. __Tracking:__ Some simple usage analytics would be interesting, or even
-   [Sentry](https://sentry.io/)
+8. __Error Handling:__ Show user-friendly error popups on unhandled exceptions,
+   or [Sentry](https://sentry.io/) ...the usage analytics would be interesting
 9. __Tidier Clusters:__ They should stack up in size-order, and all sit on the
    ground plane
 10. __Model Upload:__ Let the user upload or link to any glTF file

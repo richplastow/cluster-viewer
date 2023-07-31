@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import GLTFLink from '@/components/GLTFLink.vue'
+import { GLTFLink } from '@/components/GLTF'
 </script>
 
 <template>

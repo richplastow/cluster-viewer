@@ -1,7 +1,7 @@
 {
   "name": "cluster-viewer",
   "description": "Three.js + Vue 3 .glb viewer, with buttons to cluster objects by shape or color.",
-  "version": "0.1.9",
+  "version": "0.2.0",
   "private": false,
   "scripts": {
     "build-only": "vite build",
@@ -16,7 +16,7 @@
     "start:serve": "mv docs cluster-viewer && static-server -p 5173 -n cluster-viewer/404.html",
     "start": "npm run start:clean && npm run start:build && npm run start:serve",
     "test:e2e": "playwright test",
-    "test:unit": "vitest",
+    "test": "vitest",
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false"
   },
   "dependencies": {
@@ -27,6 +27,7 @@
     "vue-router": "^4.2.4"
   },
   "devDependencies": {
+    "@happy-dom/jest-environment": "^10.5.2",
     "@playwright/test": "^1.36.1",
     "@rushstack/eslint-patch": "^1.3.2",
     "@tsconfig/node18": "^18.2.0",

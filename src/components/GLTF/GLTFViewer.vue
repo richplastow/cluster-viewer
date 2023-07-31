@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { usePreferredColorScheme } from '@vueuse/core'
+import { OrbitControls, PerspectiveCamera } from '@janvorisek/drie';
 import { Box3, Color, MathUtils, Quaternion, Vector3 } from 'three'
 import { ref, watch } from 'vue'
-import { prependBaseToProdUrl } from '@/helpers'
 import ClusterMode from '@/types/ClusterMode'
 import ColorName from '@/types/ColorName'
 import ShapeName from '@/types/ShapeName'
 import type ModelInfo from '@/types/ModelInfo'
 import type { GLTFLoader, Matrix3, Mesh, MeshArrayDict } from '@/types/ThreeTypes'
+import { GLTFRenderer, GLTFScene } from './'
 
 const { lerp } = MathUtils
 
@@ -20,8 +20,9 @@ const props = defineProps<{
   selectedMode: ClusterMode
 }>()
 
-const model = ref<null | GLTFLoader>(null) // null before the model loads
-const theme = usePreferredColorScheme() // tracks CSS prefers-color-scheme
+/** Starts as `true`, and then becomes `false` the model has loaded and the
+ *  clusters have been calculated. */
+const paused = ref(true)
 
 /** All of the individually-positionable Meshes in the model. */
 const meshes = ref<Mesh[]>([])
@@ -29,9 +30,7 @@ const meshes = ref<Mesh[]>([])
 /** A number between 0 and 1 which represents the current position in the
  * 'tween' timeline. Reset to 0, every time the user clicks a 'Cluster' button. */
 const interpolation = ref(0)
-watch(() => props.selectedMode, async () => {
-    interpolation.value = 0
-})
+watch(() => props.selectedMode, () => interpolation.value = 0)
 
 // Initialise variables and constants used by onAnimationFrame() which don't
 // need to be reactive.
@@ -48,7 +47,7 @@ const onAnimationFrame = () => {
   previousTimestamp = currentTimestamp
 
   // If the model has not loaded, or the interpolation has ended, do nothing else.
-  if (model.value === null || interpolation.value >= 1) return
+  if (paused.value || interpolation.value >= 1) return
 
   // When the user clicks a button, interpolating to that position takes 5 seconds.
   // Note that the way lerp() is used below means that most of the movement will
@@ -274,14 +273,14 @@ const getShapeClusterCenter = (
   return new Vector3(index * spacing, 0, 0)
 }
 
-// Precalculates the clusters, to minimise the work during animation.
-const onModelLoaded = () => {
-  if (model.value === null) return
+// Precalculates the clusters, to minimise work done during animation.
+const precalculateClusters = (model: GLTFLoader) => {
+  if (model === null) throw Error('onModelReady() called while `model` is still null')
 
   // Populate the `meshes` reference with an array of Meshes, which will each be
   // treated as an individually-positionable 3D object.
   // `children[0].children[0].children` depends on the structure of the models.
-  meshes.value = model.value.three.children[0].children[0].children
+  meshes.value = model.three.children[0].children[0].children
 
   // Tell each Mesh which color cluster it's in, and group Meshes by color name.
   // The color is determined by the material's `color` property.
@@ -443,40 +442,27 @@ const onModelLoaded = () => {
       }
     )
   })
+
+  // Tell onAnimationFrame() that it can tween the clusters.
+  paused.value = false
 }
 </script>
 
 <template>
   <main>
-    <Renderer
-      :antialias="true"
-      :autoResize="true"
-      :on-before-render="onAnimationFrame"
-    >
+    <GLTFRenderer :onBeforeRender="onAnimationFrame">
       <PerspectiveCamera
         :position="cameraPosition"
         :up="[0, 1, 0]"
       >
         <OrbitControls />
       </PerspectiveCamera>
-
-      <Scene :background="theme === 'dark' ? '#333' : '#ccc'">
-        <DirectionalLight
-          :position="[30, 100, 100]"
-          :intensity="theme === 'dark' ? 0.7 : 2"
-        />
-        <DirectionalLight
-          :position="[-30, 100, -100]"
-          :intensity="theme === 'dark' ? 0.2 : 1.5"
-        />
-        <GLTFLoader
-          :position="modelPosition"
-          :url="prependBaseToProdUrl(modelUrl)"
-          @load="onModelLoaded"
-          ref="model"
-        />
-      </Scene>
-    </Renderer>
+      <GLTFScene
+        :modelPosition="modelPosition"
+        :modelUrl="modelUrl"
+        :onModelReady="precalculateClusters"
+      />
+    </GLTFRenderer>
   </main>
 </template>
 

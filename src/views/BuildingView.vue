@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import ClusterModeBox from '@/components/ClusterModeBox.vue'
+import { GLTFViewer } from '@/components/GLTF'
 import InfoBox from '@/components/InfoBox.vue'
-import GLTFViewer from '@/components/GLTFViewer.vue'
 import ClusterMode from '@/types/ClusterMode'
 import type ModelInfo from '@/types/ModelInfo'
 

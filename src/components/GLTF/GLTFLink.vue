@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { usePreferredColorScheme } from '@vueuse/core'
+import { PerspectiveCamera } from '@janvorisek/drie';
 import { Vector3 } from 'three'
 import { ref, watch } from 'vue'
-import { prependBaseToProdUrl } from '@/helpers'
-import type { GLTFLoader, PerspectiveCamera, Matrix3 } from '@/types/ThreeTypes'
+import type { GLTFLoader, PerspectiveCamera as PerspectiveCameraType, Matrix3 }
+  from '@/types/ThreeTypes'
+import { GLTFRenderer, GLTFScene } from './'
 
 const props = defineProps<{
   cameraPosition: Matrix3
@@ -14,9 +15,12 @@ const props = defineProps<{
 }>()
 
 const didSetup = ref(false)
-const camera = ref<null | PerspectiveCamera>(null)
-const model = ref<null | GLTFLoader>(null) // null before the model loads
-const theme = usePreferredColorScheme() // tracks CSS prefers-color-scheme
+const camera = ref<null | PerspectiveCameraType>(null)
+
+/** Starts as `null`, and then becomes a reference to the GLTFLoader component
+ *  as soon as the model has loaded, when GLTFScene calls onModelReady(). */
+const model = ref<null | GLTFLoader>(null) // @TODO maybe refactor into useGLTFModel()
+const onModelReady = (m: GLTFLoader) => model.value = m
 
 // Initialise variables and constants used by onAnimationFrame() which don't
 // need to be reactive.
@@ -50,24 +54,23 @@ watch(camera, async () => {
   camera.value.three.lookAt(0, 0, 0)
   camera.value.three.fov = props.fov
 })
+
 </script>
 
 <template>
   <div>
-    <Renderer :antialias="true" :autoResize="true" :on-before-render="onAnimationFrame">
+    <GLTFRenderer :onBeforeRender="onAnimationFrame">
       <PerspectiveCamera
         :autoResize="true"
         :position="cameraPosition"
         :up="[0, 1, 0]"
         ref="camera"
       />
-
-      <Scene :background="theme === 'dark' ? '#333' : '#ccc'">
-        <DirectionalLight :position="[30, 100, 100]" :intensity="theme === 'dark' ? 0.7 : 2" />
-        <DirectionalLight :position="[-30, 100, -100]" :intensity="theme === 'dark' ? 0.2 : 1.5" />
-        <GLTFLoader :url="prependBaseToProdUrl(modelUrl)" ref="model" />
-      </Scene>
-    </Renderer>
+      <GLTFScene
+        :modelUrl="modelUrl"
+        :onModelReady="onModelReady"
+      />
+    </GLTFRenderer>
     <h4>{{ text }} ▶</h4>
   </div>
 </template>
