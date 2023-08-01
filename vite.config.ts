@@ -1,13 +1,14 @@
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import packageJson from './package.json'
 
-process.env.VITE_APP_VERSION = packageJson.version
+// Copy "version" from package.json to an environment variable prefixed `VITE_`
+// which will make it available in `import.meta.env` to src/**/*.ts files.
+process.env.VITE_APP_VERSION = process.env.npm_package_version
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/cluster-viewer/',
+  base: `/${process.env.npm_package_name}/`,
   build: {
     outDir: 'docs',
   },

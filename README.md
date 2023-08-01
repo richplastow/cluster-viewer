@@ -2,7 +2,7 @@
 
 __Three.js + Vue 3 .glb viewer, with buttons to cluster objects by shape or color.__
 
-- __Version:__ 0.2.1
+- __Version:__ 0.2.2
 - __Repo:__ <https://github.com/richplastow/cluster-viewer>
 - __Homepage:__ <https://richplastow.com/cluster-viewer>
 
@@ -88,13 +88,13 @@ npx playwright install
 npm run build
 
 # Runs the end-to-end tests
-npm run test:e2e
+npm run test
 # Runs the tests only on Chromium
-npm run test:e2e -- --project=chromium
-# Runs the tests of a specific file
-npm run test:e2e -- tests/example.spec.ts
+npm run test -- --project=chromium
+# And also just a specific file's tests
+npm run test -- e2e/02-screenshots.spec.ts --project=chromium
 # Runs the tests in debug mode
-npm run test:e2e -- --debug
+npm run test -- --debug
 ```
 
 ### Lint with [ESLint](https://eslint.org/)

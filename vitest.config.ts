@@ -16,11 +16,6 @@ export default mergeConfig(
 
       exclude: [...configDefaults.exclude, 'e2e/*'],      
       root: fileURLToPath(new URL('./', import.meta.url)),
-
-      // For this config, check https://github.com/vitest-dev/vitest/issues/740
-      // See also https://github.com/vitest-dev/vitest/issues/1982
-      // threads: false,
-
       transformMode: {
         web: [/\.[jt]sx$/]
       }
