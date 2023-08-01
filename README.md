@@ -2,7 +2,7 @@
 
 __Three.js + Vue 3 .glb viewer, with buttons to cluster objects by shape or color.__
 
-- __Version:__ 0.2.2
+- __Version:__ 0.2.3
 - __Repo:__ <https://github.com/richplastow/cluster-viewer>
 - __Homepage:__ <https://richplastow.com/cluster-viewer>
 
@@ -20,20 +20,20 @@ __Three.js + Vue 3 .glb viewer, with buttons to cluster objects by shape or colo
    keyboard access
 2. __Internationalization:__ Currently UI text is hard coded in British English
 3. __Tests and Documentation:__ More unit tests and end-to-end tests, and better
-   [JSDoc](https://jsdoc.app/)
-4. __Orbit Controls:__ Limit how far the user can zoom, and provide a reset
-5. __SEO:__ Add Open Graph metadata, for better searchability and social media
+   [JSDoc](https://jsdoc.app/) documentation throughout (also, refactoring)
+4. __Performance:__ In terms of bundle/chink size, Lighthouse TTI, animation FPS
+5. __Orbit Controls:__ Limit how far the user can zoom, and provide a reset
+6. __SEO:__ Add Open Graph metadata, for better searchability and social media
    previews - and then add a share button
-6. __Offline Mode:__ With a manifest.json file, for iOS's 'Add to Home Screen'
-7. __Icons:__ A full set of icons and native theme, eg using
+7. __Offline Mode:__ for iOS's 'Add to Home Screen', maybe with a service worker
+8. __Icons:__ A full set of icons and native theme, eg using
    [RealFaviconGenerator](https://realfavicongenerator.net)
-8. __Error Handling:__ Show user-friendly error popups on unhandled exceptions,
+9. __Error Handling:__ Show user-friendly error popups on unhandled exceptions,
    or [Sentry](https://sentry.io/) ...the usage analytics would be interesting
-9. __Tidier Clusters:__ They should stack up in size-order, and all sit on the
-   ground plane
-10. __Model Upload:__ Let the user upload or link to any glTF file
-11. __Settings Popup:__ For example, set language, theme and animation speed
-12. __Fix @TODOs:__ Address various issues in the code marked `@TODO`
+10. __Tidier Clusters:__ They should stack up in size-order, and all sit on the
+    ground plane
+11. __Model Upload:__ Let the user upload or link to any glTF file
+12. __Settings Popup:__ For example, set language, theme and animation speed
 
 ## Recommended IDE Setup
 

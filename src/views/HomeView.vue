@@ -5,7 +5,7 @@ import { GLTFLink } from '@/components/GLTF'
 <template>
   <aside>
     <h1>Welcome to <br />Cluster Viewer</h1>
-    <RouterLink to="/building/">
+    <RouterLink class="left" to="/building/">
       <GLTFLink
         :cameraPosition="[0, 50, 300]"
         :fov="22"
@@ -14,8 +14,7 @@ import { GLTFLink } from '@/components/GLTF'
         text="View the Building"
       />
     </RouterLink>
-    &nbsp;
-    <RouterLink to="/apartment/">
+    <RouterLink class="right" to="/apartment/">
       <GLTFLink
         :cameraPosition="[6.5, 6.5, 6.5]"
         :fov="35"
@@ -41,6 +40,9 @@ aside {
   font-size: 1.3rem;
   text-align: left;
   z-index: 10;
+}
+.right {
+  float: right;
 }
 
 /* Breakpoints based on <https://tailwindcss.com/docs/responsive-design>. */
