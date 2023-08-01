@@ -22,9 +22,10 @@ defineProps<{
  *  as soon as the model has loaded. */
 const modelRef = ref<null | GLTFLoaderType>(null) // @TODO maybe refactor into useGLTFModel()
 const onModelLoaded = () => {
-  if (modelRef === null) // probably not possible under normal operation
+  if (modelRef.value === null)
+    // probably not possible under normal operation
     throw Error('GLTFScene: onModelLoaded() called while `modelRef` is still null')
-  if (! modelRef.value?.three?.children[0]?.children[0]?.children)
+  if (!modelRef.value?.three?.children[0]?.children[0]?.children)
     throw Error('GLTFScene: The model is not structured as expected')
   emit('modelReady', modelRef.value)
 }

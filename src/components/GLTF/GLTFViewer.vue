@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { OrbitControls, PerspectiveCamera } from '@janvorisek/drie';
+import { OrbitControls, PerspectiveCamera } from '@janvorisek/drie'
 import { Box3, Color, MathUtils, Quaternion, Vector3 } from 'three'
 import { ref, watch } from 'vue'
 import ClusterMode from '@/types/ClusterMode'
@@ -294,10 +294,11 @@ const precalculateClusters = (model: GLTFLoader) => {
         array.push(mesh)
       } else {
         mesh.userData.indexInColorCluster = 0
-        accumulator[colorName] = [ mesh ]        
+        accumulator[colorName] = [mesh]
       }
       return accumulator
-    }, {}
+    },
+    {},
   )
 
   // Tell each Mesh which shape cluster it's in, and group Meshes by shape name.
@@ -310,16 +311,18 @@ const precalculateClusters = (model: GLTFLoader) => {
       if (array) {
         array.push(mesh)
       } else {
-        accumulator[shapeName] = [ mesh ]
+        accumulator[shapeName] = [mesh]
       }
       return accumulator
-    }, {}
+    },
+    {},
   )
 
   // Send the tally of colors and shapes to the InfoBox.
   // The `invisibleColorName` prop isn't counted, eg apartment.glb's black lines.
-  const colorTally = Object.keys(meshesByColorName)
-    .filter(k => Number(k) !== props.invisibleColorName).length
+  const colorTally = Object.keys(meshesByColorName).filter(
+    (k) => Number(k) !== props.invisibleColorName,
+  ).length
   const shapeTally = Object.keys(meshesByShapeName).length
   let displayedShapeTally = shapeTally
   if (
@@ -345,13 +348,15 @@ const precalculateClusters = (model: GLTFLoader) => {
     (accumulator: Vector3[], key, i) => {
       accumulator[Number(key)] = getColorClusterCenter(i, Number(key), clusterSpacing, colorTally)
       return accumulator
-    }, []
+    },
+    [],
   )
   const shapeClusterCenters = Object.keys(meshesByShapeName).reduce(
     (accumulator: Vector3[], key, i) => {
       accumulator[Number(key)] = getShapeClusterCenter(i, Number(key), clusterSpacing, shapeTally)
       return accumulator
-    }, []
+    },
+    [],
   )
 
   // Tell each Mesh its geometry's offsets from the original starting position.
@@ -391,7 +396,7 @@ const precalculateClusters = (model: GLTFLoader) => {
   // Note that the fanning-out here is carefully tailored to the peculiarities
   // of apartment.glb and building.glb - a more complex system would be needed
   // to deal with a wider range of glTF models.
-  Object.entries(meshesByShapeName).forEach(([ shapeName, meshes ]) => {
+  Object.entries(meshesByShapeName).forEach(([shapeName, meshes]) => {
     const tally = meshes.length
     const rankCount = Math.floor(Math.sqrt(tally))
     const fileCount = Math.floor(tally / rankCount)

@@ -10,9 +10,8 @@ withDefaults(
   {
     antialias: true,
     autoResize: true,
-  }
+  },
 )
-
 </script>
 
 <template>

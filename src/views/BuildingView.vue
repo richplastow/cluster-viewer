@@ -7,10 +7,10 @@ import ClusterMode from '@/types/ClusterMode'
 import type ModelInfo from '@/types/ModelInfo'
 
 const modelInfo = ref<null | ModelInfo>(null)
-const reportModelInfo = (info: ModelInfo) => modelInfo.value = info
+const reportModelInfo = (info: ModelInfo) => (modelInfo.value = info)
 
 const selectedMode = ref(ClusterMode.Original)
-const switchMode = (mode: ClusterMode) => selectedMode.value = mode
+const switchMode = (mode: ClusterMode) => (selectedMode.value = mode)
 </script>
 
 <template>

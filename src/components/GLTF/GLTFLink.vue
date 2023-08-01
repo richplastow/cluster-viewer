@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { PerspectiveCamera } from '@janvorisek/drie';
+import { PerspectiveCamera } from '@janvorisek/drie'
 import { Vector3 } from 'three'
 import { ref, watch } from 'vue'
 import type { GLTFLoader, PerspectiveCamera as PerspectiveCameraType, Matrix3 }
@@ -54,7 +54,6 @@ watch(camera, async () => {
   camera.value.three.lookAt(0, 0, 0)
   camera.value.three.fov = props.fov
 })
-
 </script>
 
 <template>
@@ -118,5 +117,4 @@ div:hover > h4 {
     height: 18rem;
   }
 }
-
 </style>

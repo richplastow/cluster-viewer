@@ -3,7 +3,7 @@ import { computed } from 'vue'
 import type { Component } from 'vue'
 import { RouterLink } from 'vue-router'
 
-const { icon, isEnabled, isWide } = defineProps<{
+const props = defineProps<{
   icon?: Component
   isEnabled?: boolean
   isWide?: boolean
@@ -12,10 +12,10 @@ const { icon, isEnabled, isWide } = defineProps<{
   to: string
 }>()
 
-const linkClass = computed(
-  () => `${icon ? 'icon' : 'text'}${isEnabled ? ' enabled' : ''}${isWide ? ' wide' : ''}`
-)
-
+const linkClass = computed(() => {
+  const { icon, isEnabled, isWide } = props
+  return `${icon ? 'icon' : 'text'}${isEnabled ? ' enabled' : ''}${isWide ? ' wide' : ''}`
+})
 </script>
 
 <template>

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import HeaderButton from '@/components/HeaderButton.vue'
-
 </script>
 
 <template>

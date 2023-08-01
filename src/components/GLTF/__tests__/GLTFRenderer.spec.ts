@@ -12,16 +12,16 @@ describe('GLTFRenderer', () => {
 
     // true 'antialias' and 'autoResize' should be passed in as "true".
     const trueAttribs = shallowMount(GLTFRenderer, { props: {
-      antialias: true,
-      autoResize: true, // camel-case
+        antialias: true,
+        autoResize: true, // camel-case
     } })
     expect(trueAttribs.attributes('antialias')).toBe('true')
     expect(trueAttribs.attributes('autoresize')).toBe('true')
 
     // false 'antialias' and 'autoResize' should be passed in as "false".
     const falseAttribs = shallowMount(GLTFRenderer, { props: {
-      antialias: false,
-      autoResize: false,
+        antialias: false,
+        autoResize: false,
     } })
     expect(falseAttribs.attributes('antialias')).toBe('false')
     expect(falseAttribs.attributes('autoresize')).toBe('false')
