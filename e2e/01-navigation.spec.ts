@@ -39,7 +39,7 @@ const testNavigation = async (
   await expect(page).toHaveURL(`./${route}`)
   await expect(page.locator('h1')).toHaveText(heading)
   await expect(page.locator('p')).toHaveText(info)
-  await page.locator('nav a svg').click() // should bubble up to <a> element
+  await page.locator('nav a[href$="cluster-viewer/"] svg').click() // should bubble up to <a> element
   await expect(page).toHaveURL('./')
 }
 

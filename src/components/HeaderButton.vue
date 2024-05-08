@@ -6,6 +6,7 @@ import { RouterLink } from 'vue-router'
 const props = defineProps<{
   icon?: Component
   isEnabled?: boolean
+  isRight?: boolean
   isWide?: boolean
   text?: string
   title: string
@@ -13,13 +14,31 @@ const props = defineProps<{
 }>()
 
 const linkClass = computed(() => {
-  const { icon, isEnabled, isWide } = props
-  return `${icon ? 'icon' : 'text'}${isEnabled ? ' enabled' : ''}${isWide ? ' wide' : ''}`
+  const { icon, isEnabled, isRight, isWide } = props
+  return {
+    icon: icon,
+    text: !icon,
+    enabled: isEnabled,
+    right: isRight,
+    wide: isWide,
+  }
 })
 </script>
 
 <template>
+  <a
+    v-if="to.slice(0, 4) === 'http'"
+    :href="to"
+    :class="linkClass"
+    :tabindex="isEnabled ? 1 : -1"
+    :title="title"
+    target="_blank"
+  >
+    <component v-if="icon" :is="icon" />
+    <span v-else>{{ text }}</span>
+  </a>
   <RouterLink
+    v-else
     :to="to"
     :class="linkClass"
     :tabindex="isEnabled ? 1 : -1"
@@ -56,6 +75,9 @@ a.enabled {
   border-color: var(--color-border);
   color: var(--color-button-text-header);
   pointer-events: auto;
+}
+a.right {
+  float: right;
 }
 a.wide {
   padding-left: 1.2rem;

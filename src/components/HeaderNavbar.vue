@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
 import HeaderButton from './HeaderButton.vue'
-import EcosystemIcon from './icons/IconEcosystem.vue'
+import IconEcosystem from './icons/IconEcosystem.vue'
+import IconGithub from './icons/IconGithub.vue'
 
 const route = useRoute()
 
 const buttons = [
   {
     name: 'home',
-    Icon: EcosystemIcon,
+    icon: IconEcosystem,
     title: 'Click to return to the homepage',
     to: '/',
   },
@@ -24,15 +25,23 @@ const buttons = [
     title: 'Click to view the Apartment',
     to: '/apartment/',
   },
+  {
+    name: 'github',
+    icon: IconGithub,
+    isRight: true,
+    title: 'Click to see this app’s GitHub repository',
+    to: 'https://github.com/richplastow/cluster-viewer',
+  },
 ]
 </script>
 
 <template>
   <nav>
     <HeaderButton
-      v-for="{ name, Icon, text, title, to } in buttons"
-      :icon="Icon"
+      v-for="{ name, icon, isRight, text, title, to } in buttons"
+      :icon="icon"
       :isEnabled="route.name !== name"
+      :isRight="isRight"
       :key="name"
       :to="to"
       :text="text"
